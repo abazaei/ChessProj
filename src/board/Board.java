@@ -3,8 +3,8 @@ package board;
 
 import java.util.Arrays;
 
-import pieces.Piece;
-import pieces.Rook;
+import pieces.*;
+
 
 public class Board {
 
@@ -19,6 +19,24 @@ public class Board {
 				
 			}
 		}
+		
+		board[0][0].setP(new Rook("d"));
+		board[1][0].setP(new Knight("d"));
+		board[2][0].setP(new Bishop("d"));
+		board[3][0].setP(new Queen("d"));
+		board[4][0].setP(new King("d"));
+		board[5][0].setP(new Bishop("d"));
+		board[6][0].setP(new Knight("d"));
+		board[7][0].setP(new Rook("d"));
+		board[0][7].setP(new Rook("l"));
+		board[1][7].setP(new Knight("l"));
+		board[2][7].setP(new Bishop("l"));
+		board[3][7].setP(new Queen("l"));
+		board[4][7].setP(new King("l"));
+		board[5][7].setP(new Bishop("l"));
+		board[6][7].setP(new Knight("l"));
+		board[7][7].setP(new Rook("l"));
+	
 	}
 		
 	

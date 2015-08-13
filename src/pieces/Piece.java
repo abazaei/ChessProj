@@ -1,5 +1,7 @@
 package pieces;
 
+import board.Tile;
+
 public abstract class Piece {
 
 	private String piece;
@@ -12,9 +14,10 @@ public abstract class Piece {
 	
 
 	
-	public Piece(String s, String fp){
+	public Piece(String s, String fp, String pieceteam){
 		this.piece = s;
 		this.FullPiece = fp;
+		this.team = pieceteam;
 	}
 
 	public String getPiece() {
@@ -62,6 +65,56 @@ public abstract class Piece {
 
 	public void setFullteam(String fullteam) {
 		this.fullteam = fullteam;
+	}
+	
+	
+	public boolean move(Piece p, Tile t){
+		if(p.getPiece().equals("n"))
+			knjump();
+		else if(p.getPiece().equals("r"))
+			rookmove();
+		else if(p.getPiece().equals("q"))
+			queenmove();
+		else if(p.getPiece().equals("p"))
+			pawnmove();
+		else if(p.getPiece().equals("b"))
+			bishopmove();
+		else if(p.getPiece().equals("k"))
+			kingmove();
+		return false;
+		
+	}
+	private boolean kingmove() {
+		return false;
+		// TODO Auto-generated method stub
+		
+	}
+
+	private boolean bishopmove() {
+		return false;
+		// TODO Auto-generated method stub
+		
+	}
+
+	private boolean pawnmove() {
+		return false;
+		// TODO Auto-generated method stub
+		
+	}
+
+	private boolean queenmove() {
+		return false;
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean knjump(){
+		return false;
+		
+	}
+	public boolean rookmove(){
+		return false;
+		
 	}
 
 	@Override

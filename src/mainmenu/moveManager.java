@@ -14,7 +14,7 @@ public class moveManager {
 	public moveManager(){
 
 	}
-	
+
 	public void moveReader(String string, Board board) throws Exception{
 
 		Piece p;
@@ -32,7 +32,7 @@ public class moveManager {
 		}
 		else
 			if(doubleMove(string,board)){
-				System.out.println("Double Move Completed");
+
 			}
 			else 
 				System.out.println("Invalid Command");
@@ -51,26 +51,26 @@ public class moveManager {
 
 
 			if(placepiece.group(1).equalsIgnoreCase("k")){
-				p = new King();
+				p = new King("l");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("q")){
-				p = new Queen();
+				p = new Queen("l");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("n")){
-				p = new Knight();
+				p = new Knight("l");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("b")){
-				p = new Bishop();
+				p = new Bishop("l");
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("r")){
-				p = new Rook();
+				p = new Rook("l");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("p")){
-				p = new Pawn();
+				p = new Pawn("l");
 
 			}
 
@@ -149,26 +149,26 @@ public class moveManager {
 
 
 			if(placepiece.group(1).equalsIgnoreCase("k")){
-				p = new King();
+				p = new King("d");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("q")){
-				p = new Queen();
+				p = new Queen("d");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("n")){
-				p = new Knight();
+				p = new Knight("d");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("b")){
-				p = new Bishop();
+				p = new Bishop("d");
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("r")){
-				p = new Rook();
+				p = new Rook("d");
 
 			}
 			else if(placepiece.group(1).equalsIgnoreCase("p")){
-				p = new Pawn();
+				p = new Pawn("d");
 
 			}
 
@@ -248,7 +248,7 @@ public class moveManager {
 		if(b.board[p.getLetterloc()][p.getNumloc()].isOccupied() ){ 
 			if(b.board[p.getLetterloc()][p.getNumloc()].getP().getTeam().equals(p.getTeam())){
 				throw new Exception("You can not place your piece onto another one of your pieces");
-				
+
 			}
 			else if (!b.board[p.getLetterloc()][p.getNumloc()].getP().getTeam().equals(p.getTeam())){
 				System.out.println("Place "+ p.getFullteam() + p.getFullPiece() + "on " + p.getFullletterloc() + p.getNumloc() + 
@@ -276,32 +276,39 @@ public class moveManager {
 
 		Tile tileOrigin = b.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 		Tile tileDestination = b.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
-		
+
 		if (singmove.group(5)!=null){
 			if(!tileOrigin.isOccupied()){
 				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
-			
+
 			}
 			if(tileDestination.isOccupied()){
 				if(!tileDestination.getP().getTeam().equals(tileOrigin.getP().getTeam())){
-					System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
-					tileDestination.setP(tileOrigin.getP());
-					tileOrigin.setP(null);
-					//Final Destination
+
+					if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination)){
+						System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
+						tileDestination.setP(tileOrigin.getP());
+						tileOrigin.setP(null);
+					} else {
+						String cantmovethere = "The "+ tileOrigin.getP().getFullteam() + tileOrigin.getP().getFullPiece() + " cannot move to "+ 
+								tileDestination.getP().getFullletterloc()+ tileDestination.getP().getNumloc();
+						throw new Exception(cantmovethere);
+					}
+					//^ This one is complete... I think...
 				}
 				else{
 					throw new Exception("You can not capture another piece of yours");
-					
+
 				}
 			}
 			else if(!tileDestination.isOccupied()){
 				throw new Exception("There is no piece at the destination to capture");
-				
+
 			}
 			return true;
 		}
 		else if(singmove.group(5) == null){
-		
+
 			if(!tileOrigin.isOccupied()){
 				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
 			}
@@ -311,7 +318,7 @@ public class moveManager {
 				}
 				else{
 					throw new Exception("You can not move your piece onto another one of your pieces");
-					
+
 				}
 			}
 			else if(!tileDestination.isOccupied()){
@@ -322,7 +329,7 @@ public class moveManager {
 			}
 			return true;
 		}
-		
+
 		else
 			return false;
 
@@ -340,7 +347,7 @@ public class moveManager {
 		if(dubmove.groupCount() == 8)
 			System.out.println("Move the piece at " + dubmove.group(1) + dubmove.group(2) +" to "+ dubmove.group(3) + dubmove.group(4) + 
 					" and the piece at "+ dubmove.group(5) + dubmove.group(6) + " to "+ dubmove.group(7) + dubmove.group(8));
-		
+
 		else
 			return false;
 

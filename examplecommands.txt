@@ -1,9 +1,2 @@
-qla1
-qla2
-qda3
-a1a2
-a1a2*
-a1a3
-a1a3*
-a1a2
-qla2
+a1a5
+a7a8
