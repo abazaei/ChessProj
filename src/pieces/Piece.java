@@ -67,10 +67,10 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		if (getTeam().equals("l")){
-			return getFullletterloc().toLowerCase();
+			return piece.toUpperCase();
 		}
 		else
-			return getFullletterloc();
+			return piece;
 			
 	
 	}

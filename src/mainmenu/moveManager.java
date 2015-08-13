@@ -14,12 +14,8 @@ public class moveManager {
 	public moveManager(){
 
 	}
-
+	
 	public void moveReader(String string, Board board) throws Exception{
-
-
-
-
 
 		Piece p;
 		Piece p2;
@@ -44,7 +40,7 @@ public class moveManager {
 	}
 
 
-	public boolean placeMove(String string,Board b){
+	public boolean placeMove(String string,Board b) throws Exception{
 		Piece p;
 
 		Matcher placepiece = Pattern.compile("([KQNBRPkqnbrp])([ldLD])([a-hA-H])([1-8])").matcher(string);
@@ -83,64 +79,64 @@ public class moveManager {
 			}
 
 			if(placepiece.group(3).equalsIgnoreCase("a")){
-				p.setLetterloc(1);
+				p.setLetterloc(0);
 				p.setFullletterloc("A");
 
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("b")){
-				p.setLetterloc(2);
+				p.setLetterloc(1);
 				p.setFullletterloc("B");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("c")){
-				p.setLetterloc(3);
+				p.setLetterloc(2);
 				p.setFullletterloc("C");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("d")){
-				p.setLetterloc(4);
+				p.setLetterloc(3);
 				p.setFullletterloc("D");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("e")){
-				p.setLetterloc(5);
+				p.setLetterloc(4);
 				p.setFullletterloc("E");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("f")){
-				p.setLetterloc(6);
+				p.setLetterloc(5);
 				p.setFullletterloc("F");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("g")){
-				p.setLetterloc(7);
+				p.setLetterloc(6);
 				p.setFullletterloc("G");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("h")){
-				p.setLetterloc(8);
+				p.setLetterloc(7);
 				p.setFullletterloc("H");
 			}
 			else {
 				return false;
 			}
 			if(placepiece.group(4).equalsIgnoreCase("1")){
-				p.setNumloc(1);
+				p.setNumloc(0);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("2")){
-				p.setNumloc(2);
+				p.setNumloc(1);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("3")){
-				p.setNumloc(3);
+				p.setNumloc(2);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("4")){
-				p.setNumloc(4);
+				p.setNumloc(3);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("5")){
-				p.setNumloc(5);
+				p.setNumloc(4);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("6")){
-				p.setNumloc(6);
+				p.setNumloc(5);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("7")){
-				p.setNumloc(7);
+				p.setNumloc(6);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("8")){
-				p.setNumloc(8);
+				p.setNumloc(7);
 			}
 			else 
 				return false;
@@ -181,64 +177,64 @@ public class moveManager {
 			}
 
 			if(placepiece.group(3).equalsIgnoreCase("a")){
-				p.setLetterloc(1);
+				p.setLetterloc(0);
 				p.setFullletterloc("A");
 
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("b")){
-				p.setLetterloc(2);
+				p.setLetterloc(1);
 				p.setFullletterloc("B");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("c")){
-				p.setLetterloc(3);
+				p.setLetterloc(2);
 				p.setFullletterloc("C");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("d")){
-				p.setLetterloc(4);
+				p.setLetterloc(3);
 				p.setFullletterloc("D");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("e")){
-				p.setLetterloc(5);
+				p.setLetterloc(4);
 				p.setFullletterloc("E");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("f")){
-				p.setLetterloc(6);
+				p.setLetterloc(5);
 				p.setFullletterloc("F");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("g")){
-				p.setLetterloc(7);
+				p.setLetterloc(6);
 				p.setFullletterloc("G");
 			}
 			else if(placepiece.group(3).equalsIgnoreCase("h")){
-				p.setLetterloc(8);
+				p.setLetterloc(7);
 				p.setFullletterloc("H");
 			}
 			else {
 				return false;
 			}
 			if(placepiece.group(4).equalsIgnoreCase("1")){
-				p.setNumloc(1);
+				p.setNumloc(0);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("2")){
-				p.setNumloc(2);
+				p.setNumloc(1);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("3")){
-				p.setNumloc(3);
+				p.setNumloc(2);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("4")){
-				p.setNumloc(4);
+				p.setNumloc(3);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("5")){
-				p.setNumloc(5);
+				p.setNumloc(4);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("6")){
-				p.setNumloc(6);
+				p.setNumloc(5);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("7")){
-				p.setNumloc(7);
+				p.setNumloc(6);
 			}
 			else if(placepiece.group(4).equalsIgnoreCase("8")){
-				p.setNumloc(8);
+				p.setNumloc(7);
 			}
 			else 
 				return false;
@@ -249,10 +245,10 @@ public class moveManager {
 		else 
 			return false;
 
-		if(b.board[p.getLetterloc()][p.getNumloc()].isOccupied()){
+		if(b.board[p.getLetterloc()][p.getNumloc()].isOccupied() ){ 
 			if(b.board[p.getLetterloc()][p.getNumloc()].getP().getTeam().equals(p.getTeam())){
-				System.out.println("You can not move your piece onto another one of your pieces");
-				return false;
+				throw new Exception("You can not place your piece onto another one of your pieces");
+				
 			}
 			else if (!b.board[p.getLetterloc()][p.getNumloc()].getP().getTeam().equals(p.getTeam())){
 				System.out.println("Place "+ p.getFullteam() + p.getFullPiece() + "on " + p.getFullletterloc() + p.getNumloc() + 
@@ -260,15 +256,16 @@ public class moveManager {
 				return true;
 			}
 		}
-		else {
-			System.out.println("Place "+ p.getFullteam() + p.getFullPiece() + "on " + p.getFullletterloc() + p.getNumloc());
+		else if(b.board[p.getLetterloc()][p.getNumloc()].getP() == null) {
+			System.out.println("Place "+ p.getFullteam() + p.getFullPiece() + "on " + p.getFullletterloc() +   (p.getNumloc()+1));
+			b.board[p.getLetterloc()][p.getNumloc()].setP(p);
 			return true;
 		}
 
 		return true;
 	}
 
-	public boolean singleMove(String string, Board b){
+	public boolean singleMove(String string, Board b) throws Exception{
 
 		Matcher singmove = Pattern.compile("([a-hA-H])([1-8])([a-hA-H])([1-8])(\\*)?").matcher(string);
 
@@ -282,41 +279,45 @@ public class moveManager {
 		
 		if (singmove.group(5)!=null){
 			if(!tileOrigin.isOccupied()){
-				System.out.println("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
-				return false;
+				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
+			
 			}
 			if(tileDestination.isOccupied()){
 				if(!tileDestination.getP().getTeam().equals(tileOrigin.getP().getTeam())){
 					System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
+					tileDestination.setP(tileOrigin.getP());
+					tileOrigin.setP(null);
+					//Final Destination
 				}
 				else{
-					System.out.println("You can not move your piece onto another one of your pieces");
-					return false;
+					throw new Exception("You can not capture another piece of yours");
+					
 				}
 			}
 			else if(!tileDestination.isOccupied()){
-				System.out.println("There is no piece at the destination to capture");
-				return false;
+				throw new Exception("There is no piece at the destination to capture");
+				
 			}
 			return true;
 		}
 		else if(singmove.group(5) == null){
 		
 			if(!tileOrigin.isOccupied()){
-				System.out.println("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
-				return false;
+				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
 			}
 			if(tileDestination.isOccupied()){
 				if(!tileDestination.getP().getTeam().equals(tileOrigin.getP().getTeam())){
-					System.out.println("You can not move your piece onto an opposing team's piece without a capture flag '*' ");
+					throw new Exception("You can not move your piece onto an opposing team's piece without a capture flag '*' ");
 				}
 				else{
-					System.out.println("You can not move your piece onto another one of your pieces");
-					return false;
+					throw new Exception("You can not move your piece onto another one of your pieces");
+					
 				}
 			}
 			else if(!tileDestination.isOccupied()){
 				System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
+				tileDestination.setP(tileOrigin.getP());
+				tileOrigin.setP(null);
 				return true;
 			}
 			return true;
@@ -339,6 +340,7 @@ public class moveManager {
 		if(dubmove.groupCount() == 8)
 			System.out.println("Move the piece at " + dubmove.group(1) + dubmove.group(2) +" to "+ dubmove.group(3) + dubmove.group(4) + 
 					" and the piece at "+ dubmove.group(5) + dubmove.group(6) + " to "+ dubmove.group(7) + dubmove.group(8));
+		
 		else
 			return false;
 

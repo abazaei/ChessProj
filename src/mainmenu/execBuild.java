@@ -13,15 +13,14 @@ import board.Board;
 
 public class execBuild {
 
-	
+
 
 	public static void main(String []args) throws Exception{
 		moveManager mmanager = new moveManager();
 		ArrayList<String> commands = new ArrayList<String>();
 		Board board = new Board();
-		
-		board.printBoard();
-		
+
+
 		if (!(args.length == 0))
 		{
 			if(args.length > 1){
@@ -31,17 +30,32 @@ public class execBuild {
 				String fileName = args[0];
 				try {
 					BufferedReader br = new BufferedReader(new FileReader(fileName));
-					  String line;
-					   while ((line = br.readLine()) != null) {
-						   if(line.length() == 4 || line.length() == 5){
+					String line;
+					while ((line = br.readLine()) != null) {
+						if(line.length() == 4 || line.length() == 5){
+							try{
+								mmanager.moveReader(line,board);
+
+							}
+							catch (Exception e){
+								System.out.println(e.getMessage());
+								continue;
+							}
+
+						}
+						else if(line.length() == 8){
+							try{
 								mmanager.moveReader(line,board);
 							}
-							else if(line.length() == 8){
-								mmanager.moveReader(line,board);
+							catch (Exception e){
+								System.out.println(e.getMessage());
+								continue;
 							}
-							else 
-								System.out.println("Not a valid command, try again!");
-					    }
+						}
+						else 
+							System.out.println("Not a valid command, try again!");
+					}
+					board.printBoard();
 				} catch (FileNotFoundException e) {
 					System.out.println("This file doesn't exist, try again");
 				}
@@ -49,36 +63,47 @@ public class execBuild {
 		}
 		else{
 			boolean active = true;
-			 
-			while(active){
-			
-				Scanner in = new Scanner(System.in);
-				System.out.println("Hello, enter a command");
-				String userin = in.nextLine();
 
-				if(userin.length() == 4 || userin.length() == 5){
-					
-					commands.add(userin);
-					
-					
-				}
-				else if(userin.length() == 8){
-			
-					commands.add(userin);
-					
-			
-					
-				}
-		
-				else if(userin.isEmpty()){
-				
+			while(active){
+				try{
+					Scanner in = new Scanner(System.in);
+					System.out.println("Hello, enter a command");
+					String userin = in.nextLine();
+
+					if(userin.length() == 4 || userin.length() == 5){
+
+						commands.add(userin);
+
+
+					}
+					else if(userin.length() == 8){			
+						commands.add(userin);
+
+					}
+
+					else if(userin.isEmpty()){
+
 						active = false;
+					}
+					else {
+						commands.add(userin);
+					}
+
 				}
-				else 
-					System.out.println("Not a valid command, try again!");
+				catch(Exception e){
+					System.out.println("Invalid command, try again!");
+				}
 			}
 			for(int i = 0; i < commands.size(); i++){
-				mmanager.moveReader(commands.get(i),board);
+				try{
+					mmanager.moveReader(commands.get(i),board);
+					board.printBoard();
+				}
+				catch (Exception e){
+					System.out.println(e.getMessage());
+					continue;
+				}
+
 			}
 		}
 
