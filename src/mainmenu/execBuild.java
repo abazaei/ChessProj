@@ -48,6 +48,7 @@ public class execBuild {
 						while ((line = br.readLine()) != null) {
 							if(line.length() == 4 || line.length() == 5){
 								try{
+									board.scanBoard();
 									mmanager.moveReader(line,board);
 									if(ifverbose){
 										board.printBoard();
@@ -61,6 +62,7 @@ public class execBuild {
 							}
 							else if(line.length() == 8){
 								try{
+									board.scanBoard();
 									mmanager.moveReader(line,board);
 									if(ifverbose){
 										board.printBoard();
@@ -74,6 +76,7 @@ public class execBuild {
 							else 
 								System.out.println("Not a valid command, try again!");
 						}
+						board.scanBoard();
 						board.printBoard();
 					}
 					else{
@@ -111,7 +114,9 @@ public class execBuild {
 						}
 						for(int i = 0; i < commands.size(); i++){
 							try{
+								board.scanBoard();
 								mmanager.moveReader(commands.get(i),board);
+								
 								board.printBoard();
 							}
 							catch (Exception e){

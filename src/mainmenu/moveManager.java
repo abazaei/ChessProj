@@ -21,7 +21,7 @@ public class moveManager {
 		Piece p2;
 		if(string.length() == 4 || string.length() == 5){
 			if(placeMove(string,board)){
-
+				
 			}
 			else if(singleMove(string,board)){
 
@@ -276,7 +276,7 @@ public class moveManager {
 
 		Tile tileOrigin = b.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 		Tile tileDestination = b.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
-
+		
 		if (singmove.group(5)!=null){
 			if(!tileOrigin.isOccupied()){
 				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
@@ -285,13 +285,13 @@ public class moveManager {
 			if(tileDestination.isOccupied()){
 				if(!tileDestination.getP().getTeam().equals(tileOrigin.getP().getTeam())){
 
-					if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination)){
+					if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
 						System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
 						tileDestination.setP(tileOrigin.getP());
 						tileOrigin.setP(null);
 					} else {
-						String cantmovethere = "The "+ tileOrigin.getP().getFullteam() + tileOrigin.getP().getFullPiece() + " cannot move to "+ 
-								tileDestination.getP().getFullletterloc()+ tileDestination.getP().getNumloc();
+						String cantmovethere = "The "+ tileOrigin.getP().getFullteam()+" "+tileOrigin.getP().getFullPiece() + " cannot move to column " +
+								(tileDestination.getXcoord()+1)+ " row " + (tileDestination.getYcoord()+1);
 						throw new Exception(cantmovethere);
 					}
 					//^ This one is complete... I think...
@@ -322,9 +322,18 @@ public class moveManager {
 				}
 			}
 			else if(!tileDestination.isOccupied()){
-				System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
-				tileDestination.setP(tileOrigin.getP());
-				tileOrigin.setP(null);
+				if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
+					System.out.println("HelloItSucceded");
+					System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
+					tileDestination.setP(tileOrigin.getP());
+					tileOrigin.setP(null);
+				}
+				else {
+					System.out.println("HelloItfailed");
+					String cantmovethere = "The "+ tileOrigin.getP().getFullteam()+" "+tileOrigin.getP().getFullPiece() + " cannot move to column " +
+							(tileDestination.getXcoord()+1)+ " row " + (tileDestination.getYcoord()+1);
+					throw new Exception(cantmovethere);
+				}
 				return true;
 			}
 			return true;

@@ -1,5 +1,6 @@
 package pieces;
 
+import board.Board;
 import board.Tile;
 
 public abstract class Piece {
@@ -11,13 +12,19 @@ public abstract class Piece {
 	private String fullletterloc;
 	private String team;
 	private String fullteam;
-	
 
-	
+
+
 	public Piece(String s, String fp, String pieceteam){
 		this.piece = s;
 		this.FullPiece = fp;
 		this.team = pieceteam;
+		if(pieceteam.equals("l")){
+			this.fullteam = "Light";
+		}
+		else if (pieceteam.equals("d")){
+			this.fullteam = "Dark";
+		}
 	}
 
 	public String getPiece() {
@@ -66,56 +73,146 @@ public abstract class Piece {
 	public void setFullteam(String fullteam) {
 		this.fullteam = fullteam;
 	}
-	
-	
-	public boolean move(Piece p, Tile t){
+
+
+	public boolean move(Piece p, Tile t, Board b){
 		if(p.getPiece().equals("n"))
-			knjump();
+			return knJump(p,t);
 		else if(p.getPiece().equals("r"))
-			rookmove();
+			return rookMove(p,t,b);
 		else if(p.getPiece().equals("q"))
-			queenmove();
+			return queenMove(p,t);
 		else if(p.getPiece().equals("p"))
-			pawnmove();
+			return pawnMove(p,t);
 		else if(p.getPiece().equals("b"))
-			bishopmove();
+			return bishopMove(p,t,b);
 		else if(p.getPiece().equals("k"))
-			kingmove();
+			return kingMove(p,t);
 		return false;
-		
+
 	}
-	private boolean kingmove() {
+	private boolean kingMove(Piece p, Tile destination) {
 		return false;
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	private boolean bishopmove() {
+	private boolean bishopMove(Piece p, Tile destination, Board b) {
+		if (destination.getXcoord() > (p.getLetterloc()) && destination.getYcoord() > (p.getNumloc())){
+			//NorthEast
+			
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()) && destination.getYcoord() != (p.getNumloc())){
+			//
+		}
+		return false;
+
+	}
+
+	private boolean pawnMove(Piece p, Tile destination) {
 		return false;
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	private boolean pawnmove() {
+	private boolean queenMove(Piece p, Tile destination) {
 		return false;
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	private boolean queenmove() {
-		return false;
-		// TODO Auto-generated method stub
-		
+	public boolean knJump(Piece p, Tile destination){
+
+		System.out.println("letter loc " + p.getLetterloc() + " number loc "+   p.getNumloc());
+		System.out.println("destination column " + destination.getXcoord() + " destination row " +destination.getYcoord());
+		if (destination.getXcoord() == (p.getLetterloc()+2) && destination.getYcoord() == (p.getNumloc()+1)){
+			return true;
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()+2) && destination.getYcoord() == (p.getNumloc()-1)){
+			return true;
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()-2) && destination.getYcoord() == (p.getNumloc()+1)){
+			return true;
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()-1) && destination.getYcoord() == (p.getNumloc()+2)){
+			return true;
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()+1) && destination.getYcoord() == (p.getNumloc()+2)){
+			return true;
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()-1) && destination.getYcoord() == (p.getNumloc()-2)){
+			return true;
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()+1) && destination.getYcoord() == (p.getNumloc()-2)){
+			return true;
+		}
+		else
+			return false;
+
+	}
+	public boolean rookMove(Piece p, Tile destination, Board b){
+		if (destination.getXcoord() != (p.getLetterloc()) && destination.getYcoord() == (p.getNumloc())){
+			if(destination.getXcoord()>p.getLetterloc()){
+				for(int i = p.getLetterloc(); i != destination.getXcoord();i++){
+					System.out.println("Moving Horizontally-Right");
+
+					if(b.board[i][destination.getYcoord()].isOccupied()&& !b.board[i][destination.getYcoord()].getP().equals(p)){
+						return false;
+
+					}
+					//NEXT STEP: MAKE int i = the row or column of the piece . IN THE FOR LOOP
+
+				}
+				return true;
+			}
+			else{
+				for(int i = p.getLetterloc(); i != destination.getXcoord();i--){
+					System.out.println("Moving Horizontally-LEFT");
+
+					if(b.board[i][destination.getYcoord()].isOccupied()&& !b.board[i][destination.getYcoord()].getP().equals(p)){
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		else if (destination.getXcoord() == (p.getLetterloc()) && destination.getYcoord() != (p.getNumloc())){
+			if(destination.getYcoord() > p.getNumloc()){
+				for(int i = p.getNumloc(); i != destination.getYcoord();i++){
+					System.out.println("Moving Vertically-Down");
+
+					if(b.board[destination.getXcoord()][i].isOccupied() &&
+							!b.board[destination.getXcoord()][i].getP().equals(p)){
+
+						System.out.println(b.board[destination.getXcoord()][i]);
+						return false;
+
+					}
+				}
+			}
+			else{
+				for(int i = p.getNumloc(); i != destination.getYcoord();i--){
+					System.out.println("Moving Vertically-Up");
+
+					if(b.board[destination.getXcoord()][i].isOccupied() &&
+							!b.board[destination.getXcoord()][i].getP().equals(p)){
+
+						System.out.println(b.board[destination.getXcoord()][i]);
+						return false;
+
+					}
+				}
+			}
+			return true;
+			//NEED MULTIPLE FOR LOOPS FOR MOVING UP ROOK AND MOVING DOWN ROOK, TEAM DOESNT MATTER!
+		}
+		else 
+			return false;
+
+
+
 	}
 
-	public boolean knjump(){
-		return false;
-		
-	}
-	public boolean rookmove(){
-		return false;
-		
-	}
 
 	@Override
 	public String toString() {
@@ -124,9 +221,9 @@ public abstract class Piece {
 		}
 		else
 			return piece;
-			
-	
+
+
 	}
-	
-	
+
+
 }

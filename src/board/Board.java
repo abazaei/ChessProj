@@ -14,12 +14,16 @@ public class Board {
 	public Board(){
 		
 		for (int i = 0; i < board.length; i++) {
-			for(int j = 0; j < board.length; j++){
+			for(int j = 0; j < board[i].length; j++){
 				board[i][j] = new Tile();
-				
+				board[i][j].setXcoord(i);
+				board[i][j].setYcoord(j);
 			}
 		}
-		
+		//FIGURE OUT HOW TO CHANGE THE PIECES LETTER AND NUM LOC on moves 
+		//scan board 
+		board[2][2].setP(new Knight("d"));
+		board[0][4].setP(new Knight("d"));
 		board[0][0].setP(new Rook("d"));
 		board[1][0].setP(new Knight("d"));
 		board[2][0].setP(new Bishop("d"));
@@ -31,14 +35,25 @@ public class Board {
 		board[0][7].setP(new Rook("l"));
 		board[1][7].setP(new Knight("l"));
 		board[2][7].setP(new Bishop("l"));
-		board[3][7].setP(new Queen("l"));
-		board[4][7].setP(new King("l"));
+		board[3][7].setP(new King("l"));
+		board[4][7].setP(new Queen("l"));
 		board[5][7].setP(new Bishop("l"));
 		board[6][7].setP(new Knight("l"));
 		board[7][7].setP(new Rook("l"));
 	
 	}
+	public void scanBoard(){
 		
+		for (int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++){
+				if(board[i][j].getP()!=null){
+					board[i][j].getP().setLetterloc(i);
+					board[i][j].getP().setNumloc(j);
+				}
+				
+			}
+		}
+	}
 	
 	public void printBoard(){
 		
