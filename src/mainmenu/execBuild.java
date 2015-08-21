@@ -23,14 +23,18 @@ public class execBuild {
 		String fileName = "fail";
 		board.printBoard();
 
-		if(args.length > 1){
+		if(args.length > 1 && args[1].matches(".*[.]txt")){
 			fileName = args[1];
 		}
+		//else throw new Exception("Invalid execution line");
 		if ((args.length != 0))
 		{
 			if(!args[0].isEmpty()){
 				if(args[0].equals("v")){
 					ifverbose = true;
+				}
+				else if(args[0].matches(".*[.]txt")){
+					fileName = args[0];
 				}
 				else{
 					throw new Exception("Invalid args");

@@ -323,13 +323,13 @@ public class moveManager {
 			}
 			else if(!tileDestination.isOccupied()){
 				if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
-					System.out.println("HelloItSucceded");
-					System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
+					//System.out.println("HelloItSucceded");
+					System.out.println("Move the "+tileOrigin.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
 					tileDestination.setP(tileOrigin.getP());
 					tileOrigin.setP(null);
 				}
 				else {
-					System.out.println("HelloItfailed");
+					//System.out.println("HelloItfailed");
 					String cantmovethere = "The "+ tileOrigin.getP().getFullteam()+" "+tileOrigin.getP().getFullPiece() + " cannot move to column " +
 							(tileDestination.getXcoord()+1)+ " row " + (tileDestination.getYcoord()+1);
 					throw new Exception(cantmovethere);

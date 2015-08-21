@@ -81,81 +81,99 @@ public abstract class Piece {
 		else if(p.getPiece().equals("r"))
 			return rookMove(p,t,b);
 		else if(p.getPiece().equals("q"))
-			return queenMove(p,t);
+			return queenMove(p,t, b);
 		else if(p.getPiece().equals("p"))
 			return pawnMove(p,t);
 		else if(p.getPiece().equals("b"))
 			return bishopMove(p,t,b);
 		else if(p.getPiece().equals("k"))
-			return kingMove(p,t);
+			return kingMove(p,t, b);
 		return false;
 
 	}
-	private boolean kingMove(Piece p, Tile destination) {
-		return false;
-		// TODO Auto-generated method stub
+	private boolean kingMove(Piece p, Tile destination, Board b) {
 
+		if(queenMove(p,destination,b) && (Math.abs(p.getLetterloc()-destination.getXcoord()) == 1 || Math.abs(p.getNumloc()-destination.getYcoord())==1)){
+			return true;
+		}
+
+
+		return false;
 	}
 
 	private boolean bishopMove(Piece p, Tile destination, Board b) {
 		//FIX THE MOVE, IT IS GOING THROUGH OBJECTS IN A DIAGNOL BUT HITTING OBJECTS ADJACENT
 		if (destination.getXcoord() > (p.getLetterloc()) && destination.getYcoord() < (p.getNumloc())){
-			//NorthEast [i + 1][j - 1]
-			//System.out.println("This is NorthEast");
-			for(int i = p.getLetterloc() + 1, j = p.getNumloc() - 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j--){
-				if(b.board[i][j].isOccupied()){
-					System.out.println(i+","+j + " This is NorthEast");
-					return false;
+			if((Math.abs((p.getLetterloc()-destination.getXcoord())) == Math.abs(p.getNumloc()-destination.getYcoord()))){
+				//NorthEast [i + 1][j - 1]
+				//System.out.println("This is NorthEast");
+				for(int i = p.getLetterloc() + 1, j = p.getNumloc() - 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j--){
+					if(b.board[i][j].isOccupied()){
+
+						//System.out.println(i+","+j + " This is NorthEast");
+						return false;
+					}
+
 				}
-				
 			}
+			else return false;
 			return true;
 		}
 		else if (destination.getXcoord() < (p.getLetterloc()) && destination.getYcoord() < (p.getNumloc())){
-			//NorthWest [x-1][y-1]
-			//System.out.println("This is NorthWest");
-			for(int i = p.getLetterloc() - 1, j = p.getNumloc() - 1; i != destination.getXcoord() && j != destination.getYcoord();i--,j--){
-				if(b.board[i][j].isOccupied()){
-					//System.out.println(i+","+j + " This is NorthWest");
-					return false;
+			if((Math.abs((p.getLetterloc()-destination.getXcoord())) == Math.abs(p.getNumloc()-destination.getYcoord()))){
+				//NorthWest [x-1][y-1]
+				//System.out.println("This is NorthWest");
+				for(int i = p.getLetterloc() - 1, j = p.getNumloc() - 1; i != destination.getXcoord() && j != destination.getYcoord();i--,j--){
+					if(b.board[i][j].isOccupied()){
+						//throw new Exception("There is a "+b.board[i][j].getP()+" in the way");
+						return false;
+
+					}
 
 				}
-				
 			}
+			else return false;
 			return true;
 		}
 		else if (destination.getXcoord() < (p.getLetterloc()) && destination.getYcoord() > (p.getNumloc())){
-			//SouthWest [x-1][y+1]
-//			System.out.println("This is SouthWest");
-//			System.out.println(b.board[p.getLetterloc() - 1][p.getNumloc() + 1].getP());
-			for(int i = p.getLetterloc() - 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i--,j++){
-				
-				//2 - 1 , 0 + 1 
-				//i = 1 , j = 1
-				if(b.board[i][j].isOccupied()){
-					//System.out.println(i+","+j + " This is SouthWest");
-					return false;
-					
+			if((Math.abs((p.getLetterloc()-destination.getXcoord())) == Math.abs(p.getNumloc()-destination.getYcoord()))){
+				//SouthWest [x-1][y+1]
+				//System.out.println("This is SouthWest");
+				//			System.out.println(b.board[p.getLetterloc() - 1][p.getNumloc() + 1].getP());
+				for(int i = p.getLetterloc() - 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i--,j++){
+
+					//2 - 1 , 0 + 1 
+					//i = 1 , j = 1
+					if(b.board[i][j].isOccupied()){
+						//System.out.println(i+","+j + " This is SouthWest");
+						return false;
+
+					}
+
 				}
-				
 			}
+			else 
+				return false;
 			return true;
 		}
 		else if (destination.getXcoord() > (p.getLetterloc()) && destination.getYcoord() > (p.getNumloc())){
-			//SouthEast [x+1][y+1]
-			//System.out.println("This is SouthEast");
-			for(int i = p.getLetterloc() + 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j++){
-				
-				if(b.board[i][j].isOccupied()){
-					//System.out.println(i+","+j + " This is SouthEast");
-					return false;
+			if((Math.abs((p.getLetterloc()-destination.getXcoord())) == Math.abs(p.getNumloc()-destination.getYcoord()))){
+				//SouthEast [x+1][y+1]
+				//System.out.println("This is SouthEast");
+				for(int i = p.getLetterloc() + 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j++){
+
+					if(b.board[i][j].isOccupied()){
+						//System.out.println(i+","+j + " This is SouthEast");
+						return false;
+
+					}
 
 				}
-				
 			}
+			else return false;
 			return true;
 		}
-		System.out.println(destination.getXcoord() +"," + (p.getLetterloc())+ "X:Y" +destination.getYcoord()+ "," + (p.getNumloc()));
+		//System.out.println(destination.getXcoord() +"," + (p.getLetterloc())+ "X:Y" +destination.getYcoord()+ "," + (p.getNumloc()));
 		return false;
 	}
 
@@ -165,7 +183,10 @@ public abstract class Piece {
 
 	}
 
-	private boolean queenMove(Piece p, Tile destination) {
+	private boolean queenMove(Piece p, Tile destination, Board b) {
+		if(bishopMove(p,destination, b) || rookMove(p,destination, b)){
+			return true;
+		}
 		return false;
 		// TODO Auto-generated method stub
 
@@ -173,8 +194,8 @@ public abstract class Piece {
 
 	public boolean knJump(Piece p, Tile destination){
 
-		System.out.println("letter loc " + p.getLetterloc() + " number loc "+   p.getNumloc());
-		System.out.println("destination column " + destination.getXcoord() + " destination row " +destination.getYcoord());
+//		System.out.println("letter loc " + p.getLetterloc() + " number loc "+   p.getNumloc());
+//		System.out.println("destination column " + destination.getXcoord() + " destination row " +destination.getYcoord());
 		if (destination.getXcoord() == (p.getLetterloc()+2) && destination.getYcoord() == (p.getNumloc()+1)){
 			return true;
 		}
@@ -204,7 +225,7 @@ public abstract class Piece {
 		if (destination.getXcoord() != (p.getLetterloc()) && destination.getYcoord() == (p.getNumloc())){
 			if(destination.getXcoord()>p.getLetterloc()){
 				for(int i = p.getLetterloc(); i != destination.getXcoord();i++){
-					System.out.println("Moving Horizontally-Right");
+					//System.out.println("Moving Horizontally-Right");
 
 					if(b.board[i][destination.getYcoord()].isOccupied()&& !b.board[i][destination.getYcoord()].getP().equals(p)){
 						return false;
@@ -217,7 +238,7 @@ public abstract class Piece {
 			}
 			else{
 				for(int i = p.getLetterloc(); i != destination.getXcoord();i--){
-					System.out.println("Moving Horizontally-LEFT");
+					//System.out.println("Moving Horizontally-LEFT");
 
 					if(b.board[i][destination.getYcoord()].isOccupied()&& !b.board[i][destination.getYcoord()].getP().equals(p)){
 						return false;
@@ -229,12 +250,12 @@ public abstract class Piece {
 		else if (destination.getXcoord() == (p.getLetterloc()) && destination.getYcoord() != (p.getNumloc())){
 			if(destination.getYcoord() > p.getNumloc()){
 				for(int i = p.getNumloc(); i != destination.getYcoord();i++){
-					System.out.println("Moving Vertically-Down");
+					//System.out.println("Moving Vertically-Down");
 
 					if(b.board[destination.getXcoord()][i].isOccupied() &&
 							!b.board[destination.getXcoord()][i].getP().equals(p)){
 
-						System.out.println(b.board[destination.getXcoord()][i]);
+						//System.out.println(b.board[destination.getXcoord()][i]);
 						return false;
 
 					}
@@ -242,12 +263,12 @@ public abstract class Piece {
 			}
 			else{
 				for(int i = p.getNumloc(); i != destination.getYcoord();i--){
-					System.out.println("Moving Vertically-Up");
+					//System.out.println("Moving Vertically-Up");
 
 					if(b.board[destination.getXcoord()][i].isOccupied() &&
 							!b.board[destination.getXcoord()][i].getP().equals(p)){
 
-						System.out.println(b.board[destination.getXcoord()][i]);
+						//System.out.println(b.board[destination.getXcoord()][i]);
 						return false;
 
 					}
