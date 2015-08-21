@@ -205,6 +205,9 @@ public abstract class Piece {
 		else if (destination.getXcoord() == (p.getLetterloc()-2) && destination.getYcoord() == (p.getNumloc()+1)){
 			return true;
 		}
+		else if (destination.getXcoord() == (p.getLetterloc()-2) && destination.getYcoord() == (p.getNumloc()-1)){
+			return true;
+		}
 		else if (destination.getXcoord() == (p.getLetterloc()-1) && destination.getYcoord() == (p.getNumloc()+2)){
 			return true;
 		}
