@@ -98,15 +98,65 @@ public abstract class Piece {
 	}
 
 	private boolean bishopMove(Piece p, Tile destination, Board b) {
-		if (destination.getXcoord() > (p.getLetterloc()) && destination.getYcoord() > (p.getNumloc())){
-			//NorthEast
-			
+		//FIX THE MOVE, IT IS GOING THROUGH OBJECTS IN A DIAGNOL BUT HITTING OBJECTS ADJACENT
+		if (destination.getXcoord() > (p.getLetterloc()) && destination.getYcoord() < (p.getNumloc())){
+			//NorthEast [i + 1][j - 1]
+			//System.out.println("This is NorthEast");
+			for(int i = p.getLetterloc() + 1, j = p.getNumloc() - 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j--){
+				if(b.board[i][j].isOccupied()){
+					System.out.println(i+","+j + " This is NorthEast");
+					return false;
+				}
+				
+			}
+			return true;
 		}
-		else if (destination.getXcoord() == (p.getLetterloc()) && destination.getYcoord() != (p.getNumloc())){
-			//
-		}
-		return false;
+		else if (destination.getXcoord() < (p.getLetterloc()) && destination.getYcoord() < (p.getNumloc())){
+			//NorthWest [x-1][y-1]
+			//System.out.println("This is NorthWest");
+			for(int i = p.getLetterloc() - 1, j = p.getNumloc() - 1; i != destination.getXcoord() && j != destination.getYcoord();i--,j--){
+				if(b.board[i][j].isOccupied()){
+					//System.out.println(i+","+j + " This is NorthWest");
+					return false;
 
+				}
+				
+			}
+			return true;
+		}
+		else if (destination.getXcoord() < (p.getLetterloc()) && destination.getYcoord() > (p.getNumloc())){
+			//SouthWest [x-1][y+1]
+//			System.out.println("This is SouthWest");
+//			System.out.println(b.board[p.getLetterloc() - 1][p.getNumloc() + 1].getP());
+			for(int i = p.getLetterloc() - 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i--,j++){
+				
+				//2 - 1 , 0 + 1 
+				//i = 1 , j = 1
+				if(b.board[i][j].isOccupied()){
+					//System.out.println(i+","+j + " This is SouthWest");
+					return false;
+					
+				}
+				
+			}
+			return true;
+		}
+		else if (destination.getXcoord() > (p.getLetterloc()) && destination.getYcoord() > (p.getNumloc())){
+			//SouthEast [x+1][y+1]
+			//System.out.println("This is SouthEast");
+			for(int i = p.getLetterloc() + 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j++){
+				
+				if(b.board[i][j].isOccupied()){
+					//System.out.println(i+","+j + " This is SouthEast");
+					return false;
+
+				}
+				
+			}
+			return true;
+		}
+		System.out.println(destination.getXcoord() +"," + (p.getLetterloc())+ "X:Y" +destination.getYcoord()+ "," + (p.getNumloc()));
+		return false;
 	}
 
 	private boolean pawnMove(Piece p, Tile destination) {

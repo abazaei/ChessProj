@@ -23,7 +23,7 @@ public class Board {
 		//FIGURE OUT HOW TO CHANGE THE PIECES LETTER AND NUM LOC on moves 
 		//scan board 
 		board[2][2].setP(new Knight("d"));
-		board[0][4].setP(new Knight("d"));
+		board[6][2].setP(new Knight("d"));
 		board[0][0].setP(new Rook("d"));
 		board[1][0].setP(new Knight("d"));
 		board[2][0].setP(new Bishop("d"));
