@@ -11,32 +11,68 @@ import board.Tile;
 
 public class moveManager {
 
+	boolean LightTeam = true;
+
 	public moveManager(){
 
 	}
 
 	public void moveReader(String string, Board board) throws Exception{
 
-		Piece p;
-		Piece p2;
-		if(string.length() == 4 || string.length() == 5){
-			if(placeMove(string,board)){
-				
-			}
-			else if(singleMove(string,board)){
 
-			}
+		
+		
+		Matcher singmove = Pattern.compile("([a-hA-H])([1-8])([a-hA-H])([1-8])(\\*)?").matcher(string);
+		singmove.find();
+		System.out.println(LightTeam);
+		Tile tileOrigin = board.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
+		
+		
+		if(LightTeam && tileOrigin.getP().getTeam().equals("l")){
 
+			if(string.length() == 4 || string.length() == 5){
+				if(placeMove(string,board)){
+					LightTeam = false;
+				}
+				else if(singleMove(string,board)){
+					System.out.println("Hello");
+					LightTeam = false;
+				}
+
+				else
+					System.out.println("Invalid Command!");
+			}
 			else
-				System.out.println("Invalid Command!");
+				if(doubleMove(string,board)){
+					LightTeam = false;
+				}
+				else 
+					System.out.println("Invalid Command");
+
+		}
+		else if(LightTeam == false && tileOrigin.getP().getTeam().equals("d")){
+
+			if(string.length() == 4 || string.length() == 5){
+				if(placeMove(string,board)){
+					LightTeam = true;
+				}
+				else if(singleMove(string,board)){
+					LightTeam = true;
+				}
+
+				else
+					System.out.println("Invalid Command!");
+			}
+			else
+				if(doubleMove(string,board)){
+					LightTeam = true;
+				}
+				else 
+					System.out.println("Invalid Command");
+
 		}
 		else
-			if(doubleMove(string,board)){
-
-			}
-			else 
-				System.out.println("Invalid Command");
-
+			throw new Exception("It is not your turn!");
 	}
 
 
@@ -276,7 +312,7 @@ public class moveManager {
 
 		Tile tileOrigin = b.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 		Tile tileDestination = b.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
-		
+
 		if (singmove.group(5)!=null){
 			if(!tileOrigin.isOccupied()){
 				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
