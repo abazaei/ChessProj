@@ -9,10 +9,10 @@ import pieces.*;
 public class Board {
 
 	public Tile[][] board = new Tile[8][8];
-	
-	
+
+
 	public Board(){
-		
+
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
 				board[i][j] = new Tile();
@@ -22,10 +22,10 @@ public class Board {
 		}
 		//FIGURE OUT HOW TO CHANGE THE PIECES LETTER AND NUM LOC on moves 
 		//scan board 
-//		board[2][2].setP(new Knight("d"));
-//		board[3][2].setP(new Knight("d"));
-//		board[6][2].setP(new Knight("d"));
-		
+		//		board[2][2].setP(new Knight("d"));
+		//		board[3][2].setP(new Knight("d"));
+		//		board[6][2].setP(new Knight("d"));
+
 		board[0][0].setP(new Rook("d"));
 		board[1][0].setP(new Knight("d"));
 		board[2][0].setP(new Bishop("d"));
@@ -34,6 +34,16 @@ public class Board {
 		board[5][0].setP(new Bishop("d"));
 		board[6][0].setP(new Knight("d"));
 		board[7][0].setP(new Rook("d"));
+
+		board[0][1].setP(new Pawn("d"));
+		board[1][1].setP(new Pawn("d"));
+		board[2][1].setP(new Pawn("d"));
+		board[3][1].setP(new Pawn("d"));
+		board[4][1].setP(new Pawn("d"));
+		board[5][1].setP(new Pawn("d"));
+		board[6][1].setP(new Pawn("d"));
+		board[7][1].setP(new Pawn("d"));
+
 		board[0][7].setP(new Rook("l"));
 		board[1][7].setP(new Knight("l"));
 		board[2][7].setP(new Bishop("l"));
@@ -42,23 +52,33 @@ public class Board {
 		board[5][7].setP(new Bishop("l"));
 		board[6][7].setP(new Knight("l"));
 		board[7][7].setP(new Rook("l"));
-	
+
+
+		board[0][6].setP(new Pawn("l"));
+		board[1][6].setP(new Pawn("l"));
+		board[2][6].setP(new Pawn("l"));
+		board[3][6].setP(new Pawn("l"));
+		board[4][6].setP(new Pawn("l"));
+		board[5][6].setP(new Pawn("l"));
+		board[6][6].setP(new Pawn("l"));
+		board[7][6].setP(new Pawn("l"));
+
 	}
 	public void scanBoard(){
-		
+
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
 				if(board[i][j].getP()!=null){
 					board[i][j].getP().setLetterloc(i);
 					board[i][j].getP().setNumloc(j);
 				}
-				
+
 			}
 		}
 	}
-	
+
 	public void printBoard(){
-		
+
 		String boardS = "";
 		boardS += "    a   b   c   d   e   f   g   h \n";
 		boardS += "   ===============================\n";
@@ -74,6 +94,6 @@ public class Board {
 
 		System.out.println(boardS.replace("null", "-"));
 	}
-	
+
 
 }

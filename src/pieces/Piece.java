@@ -83,7 +83,7 @@ public abstract class Piece {
 		else if(p.getPiece().equals("q"))
 			return queenMove(p,t, b);
 		else if(p.getPiece().equals("p"))
-			return pawnMove(p,t);
+			return pawnMove(p,t, b);
 		else if(p.getPiece().equals("b"))
 			return bishopMove(p,t,b);
 		else if(p.getPiece().equals("k"))
@@ -177,7 +177,39 @@ public abstract class Piece {
 		return false;
 	}
 
-	private boolean pawnMove(Piece p, Tile destination) {
+	private boolean pawnMove(Piece p, Tile destination, Board b) {
+		if(p.getTeam().equals("d")){
+			if(!(p.getLetterloc()!=destination.getXcoord()) && !b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
+				if(p.getNumloc() < destination.getYcoord()){
+					if(destination.getYcoord() - p.getNumloc() == 1)
+						return true;
+				}
+			}
+			else if((p.getLetterloc()!=destination.getXcoord()) && b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
+				//d captures
+				if(Math.abs(p.getLetterloc()-destination.getXcoord())== 1 && Math.abs(p.getNumloc() - destination.getYcoord())==1){
+					if(p.getNumloc() < destination.getYcoord()){
+						return true;
+					}
+				}
+			}
+		}
+		else if(p.getTeam().equals("l")){
+			if(!(p.getLetterloc()!=destination.getXcoord()) && !b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
+				if(p.getNumloc() > destination.getYcoord()){
+					if(p.getNumloc() - destination.getYcoord() == 1)
+						return true;
+				}
+			}
+			else if((p.getLetterloc()!=destination.getXcoord()) && b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
+				//l captures
+				if(Math.abs(p.getLetterloc()-destination.getXcoord())== 1 && Math.abs(p.getNumloc() - destination.getYcoord())==1){
+					if(p.getNumloc() > destination.getYcoord()){
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 		// TODO Auto-generated method stub
 
@@ -188,14 +220,13 @@ public abstract class Piece {
 			return true;
 		}
 		return false;
-		// TODO Auto-generated method stub
 
 	}
 
 	public boolean knJump(Piece p, Tile destination){
 
-//		System.out.println("letter loc " + p.getLetterloc() + " number loc "+   p.getNumloc());
-//		System.out.println("destination column " + destination.getXcoord() + " destination row " +destination.getYcoord());
+		//		System.out.println("letter loc " + p.getLetterloc() + " number loc "+   p.getNumloc());
+		//		System.out.println("destination column " + destination.getXcoord() + " destination row " +destination.getYcoord());
 		if (destination.getXcoord() == (p.getLetterloc()+2) && destination.getYcoord() == (p.getNumloc()+1)){
 			return true;
 		}
