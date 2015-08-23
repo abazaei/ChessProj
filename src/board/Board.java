@@ -35,6 +35,7 @@ public class Board {
 		board[6][0].setP(new Knight("d"));
 		board[7][0].setP(new Rook("d"));
 
+		
 		board[0][1].setP(new Pawn("d"));
 		board[1][1].setP(new Pawn("d"));
 		board[2][1].setP(new Pawn("d"));

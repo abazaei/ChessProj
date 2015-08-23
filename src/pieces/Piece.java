@@ -178,15 +178,19 @@ public abstract class Piece {
 	}
 
 	private boolean pawnMove(Piece p, Tile destination, Board b) {
-		
-		
+
+
 		//MAKE DOUBLE JUMP ON FIRST MOVE WORK
-		
+
 		if(p.getTeam().equals("d")){
 			if(!(p.getLetterloc()!=destination.getXcoord()) && !b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
 				if(p.getNumloc() < destination.getYcoord()){
-					if(destination.getYcoord() - p.getNumloc() == 1)
+					if(destination.getYcoord() - p.getNumloc() == 1){
 						return true;
+					}
+					else if((destination.getYcoord()- p.getNumloc()  == 2 ) && (p.getNumloc() == 1)){
+						return true;
+					}
 				}
 			}
 			else if((p.getLetterloc()!=destination.getXcoord()) && b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
@@ -195,14 +199,20 @@ public abstract class Piece {
 					if(p.getNumloc() < destination.getYcoord()){
 						return true;
 					}
+
 				}
 			}
+
 		}
 		else if(p.getTeam().equals("l")){
 			if(!(p.getLetterloc()!=destination.getXcoord()) && !b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
 				if(p.getNumloc() > destination.getYcoord()){
-					if(p.getNumloc() - destination.getYcoord() == 1)
+					if(p.getNumloc() - destination.getYcoord() == 1){
 						return true;
+					}
+					else if((p.getNumloc() - destination.getYcoord() == 2) && (p.getNumloc() == 6)){
+						return true;
+					}
 				}
 			}
 			else if((p.getLetterloc()!=destination.getXcoord()) && b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){
