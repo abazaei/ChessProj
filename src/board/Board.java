@@ -9,7 +9,37 @@ import pieces.*;
 public class Board {
 
 	public Tile[][] board = new Tile[8][8];
+	int lKingx = 0;
+	int lKingy = 0;
+	int dKingx = 0;
+	int dKingy = 0;
 
+
+
+	public int getlKingx() {
+		return lKingx;
+	}
+	public void setlKingx(int lKingx) {
+		this.lKingx = lKingx;
+	}
+	public int getlKingy() {
+		return lKingy;
+	}
+	public void setlKingy(int lKingy) {
+		this.lKingy = lKingy;
+	}
+	public int getdKingx() {
+		return dKingx;
+	}
+	public void setdKingx(int dKingx) {
+		this.dKingx = dKingx;
+	}
+	public int getdKingy() {
+		return dKingy;
+	}
+	public void setdKingy(int dKingy) {
+		this.dKingy = dKingy;
+	}
 
 	public Board(){
 
@@ -20,8 +50,8 @@ public class Board {
 				board[i][j].setYcoord(j);
 			}
 		}
-		//FIGURE OUT HOW TO CHANGE THE PIECES LETTER AND NUM LOC on moves 
-		//scan board 
+		//
+		//
 		//		board[2][2].setP(new Knight("d"));
 		//		board[3][2].setP(new Knight("d"));
 		//		board[6][2].setP(new Knight("d"));
@@ -35,7 +65,7 @@ public class Board {
 		board[6][0].setP(new Knight("d"));
 		board[7][0].setP(new Rook("d"));
 
-		
+
 		board[0][1].setP(new Pawn("d"));
 		board[1][1].setP(new Pawn("d"));
 		board[2][1].setP(new Pawn("d"));
@@ -72,6 +102,14 @@ public class Board {
 				if(board[i][j].getP()!=null){
 					board[i][j].getP().setLetterloc(i);
 					board[i][j].getP().setNumloc(j);
+					if(board[i][j].getP().getTeam() == "l" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
+						this.lKingx = i;
+						this.lKingy = j;
+					}
+					else if(board[i][j].getP().getTeam() == "d" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
+						this.dKingx = i;
+						this.dKingy = j;
+					}
 				}
 
 			}

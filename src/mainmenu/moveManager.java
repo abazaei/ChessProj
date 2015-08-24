@@ -399,4 +399,8 @@ public class moveManager {
 
 		return true;
 	}
+	public boolean check(Board b){
+		
+		return false;
+	}
 }

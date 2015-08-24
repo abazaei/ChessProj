@@ -120,7 +120,7 @@ public class execBuild {
 							try{
 								board.scanBoard();
 								mmanager.moveReader(commands.get(i),board);
-								
+
 								board.printBoard();
 							}
 							catch (Exception e){
