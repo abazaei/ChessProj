@@ -402,5 +402,6 @@ public class moveManager {
 	public boolean check(Board b){
 		
 		return false;
+		
 	}
 }
