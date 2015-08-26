@@ -76,10 +76,10 @@ public class Board {
 		board[7][1].setP(new Pawn("d"));
 
 		board[0][7].setP(new Rook("l"));
-		board[1][7].setP(new Knight("l"));
-		board[2][7].setP(new Bishop("l"));
+//		board[1][7].setP(new Knight("l"));
+//		board[2][7].setP(new Bishop("l"));
 		board[4][7].setP(new King("l"));
-		board[3][7].setP(new Queen("l"));
+//		board[3][7].setP(new Queen("l"));
 		board[5][7].setP(new Bishop("l"));
 		board[6][7].setP(new Knight("l"));
 		board[7][7].setP(new Rook("l"));
@@ -103,13 +103,21 @@ public class Board {
 					board[i][j].getP().setLetterloc(i);
 					board[i][j].getP().setNumloc(j);
 					if(board[i][j].getP().getTeam() == "l" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
+						//LOOP THROUGH entire board looking for a piece
+						//Then inside that^ , LOOP THROUGH ENTIRE BOARD, PASSING EACH POSITION in the move(Piece, string, board)
+						//
+						
+						
 						this.lKingx = i;
 						this.lKingy = j;
+						
+						
 					}
 					else if(board[i][j].getP().getTeam() == "d" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
 						this.dKingx = i;
 						this.dKingy = j;
 					}
+					
 				}
 
 			}

@@ -20,14 +20,14 @@ public class moveManager {
 	public void moveReader(String string, Board board) throws Exception{
 
 
-		
-		
+
+
 		Matcher singmove = Pattern.compile("([a-hA-H])([1-8])([a-hA-H])([1-8])(\\*)?").matcher(string);
 		singmove.find();
 		System.out.println(LightTeam);
 		Tile tileOrigin = board.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
-		
-		
+
+
 		if(LightTeam && tileOrigin.getP().getTeam().equals("l")){
 
 			if(string.length() == 4 || string.length() == 5){
@@ -313,6 +313,8 @@ public class moveManager {
 		Tile tileOrigin = b.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 		Tile tileDestination = b.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
 
+
+
 		if (singmove.group(5)!=null){
 			if(!tileOrigin.isOccupied()){
 				throw new Exception("There is no piece to be found at the position "+singmove.group(1) + singmove.group(2));
@@ -336,7 +338,9 @@ public class moveManager {
 					throw new Exception("You can not capture another piece of yours");
 
 				}
-			}
+			}	
+
+
 			else if(!tileDestination.isOccupied()){
 				throw new Exception("There is no piece at the destination to capture");
 
@@ -358,12 +362,55 @@ public class moveManager {
 				}
 			}
 			else if(!tileDestination.isOccupied()){
+				System.out.println("TileDestination XCoord = "+tileDestination.getXcoord());
+				System.out.println("TileDestination YCoord = "+tileDestination.getYcoord());
+		
 				if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
 					//System.out.println("HelloItSucceded");
 					System.out.println("Move the "+tileOrigin.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
 					tileDestination.setP(tileOrigin.getP());
 					tileOrigin.setP(null);
 				}
+				//CastleLight
+				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 6 && tileDestination.getYcoord() == 7)){
+					System.out.println("WE ARE IN 6,7");
+					if(b.board[tileOrigin.getXcoord()+1][tileOrigin.getYcoord()].getP() == null){
+						System.out.println("First Inner If done");
+						if(b.board[tileOrigin.getXcoord()-2][tileOrigin.getYcoord()].getP() == null){
+							System.out.println("Second Inner If done");
+							System.out.println(b.board[0][7].getP().getPiece());
+							if(b.board[7][7].getP().getPiece().equals("r") && b.board[0][7].getP().getTeam().equals("l")){
+								System.out.println("In The Moving If!");
+								b.board[5][7].setP(b.board[0][7].getP());
+								b.board[7][7].setP(null);
+								tileDestination.setP(tileOrigin.getP());
+								tileOrigin.setP(null);
+							}
+						}
+					}
+				}
+				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 2 && tileDestination.getYcoord() == 7)){
+					System.out.println("WE ARE IN 2,7");
+					
+					
+					//THIS ONE IS COMPLETE . DO IT FOR THE TOP ONE!!! test it first arush you think you might have just finished it ^
+					if(b.board[tileOrigin.getXcoord()-1][tileOrigin.getYcoord()].getP() == null){
+						System.out.println("First Inner If done");
+						if(b.board[tileOrigin.getXcoord()-2][tileOrigin.getYcoord()].getP() == null){
+							System.out.println("Second Inner If done");
+							System.out.println(b.board[0][7].getP().getPiece());
+							if(b.board[0][7].getP().getPiece().equals("r") && b.board[0][7].getP().getTeam().equals("l")){
+								System.out.println("In The Moving If!");
+								b.board[3][7].setP(b.board[0][7].getP());
+								b.board[0][7].setP(null);
+								tileDestination.setP(tileOrigin.getP());
+								tileOrigin.setP(null);
+							}
+						}
+					}
+
+				}
+				//CastleDark
 				else {
 					//System.out.println("HelloItfailed");
 					String cantmovethere = "The "+ tileOrigin.getP().getFullteam()+" "+tileOrigin.getP().getFullPiece() + " cannot move to column " +
@@ -372,6 +419,10 @@ public class moveManager {
 				}
 				return true;
 			}
+
+			//Castling below
+
+
 			return true;
 		}
 
@@ -382,26 +433,40 @@ public class moveManager {
 
 
 	}
-	public boolean doubleMove(String string, Board board){
+	public boolean doubleMove(String string, Board b) throws Exception{
 		Matcher dubmove = Pattern.compile("([a-hA-H])([1-8])([a-hA-H])([1-8])([a-hA-H])([1-8])([a-hA-H])([1-8])").matcher(string);
+
+
 
 		if (!dubmove.find() && string.length() != 8){
 			return false;
 		}
 
-		if(dubmove.groupCount() == 8)
+		Tile tileOrigin = b.board[(int)dubmove.group(1).toLowerCase().charAt(0)-97][(int)dubmove.group(2).charAt(0)-49];
+		Tile tileDestination = b.board[(int)dubmove.group(3).toLowerCase().charAt(0)-97][(int)dubmove.group(4).charAt(0)-49];
+
+		Tile tileDestinationKing = b.board[(int)dubmove.group(3).toLowerCase().charAt(0)-97][(int)dubmove.group(4).charAt(0)-49];
+		Tile tileDestinationRook = b.board[(int)dubmove.group(3).toLowerCase().charAt(0)-97][(int)dubmove.group(4).charAt(0)-49];
+
+		if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileDestination.getP().getPiece().equalsIgnoreCase("r")){
+
+			tileDestination.setP(tileOrigin.getP());
+			tileOrigin.setP(null);
+
 			System.out.println("Move the piece at " + dubmove.group(1) + dubmove.group(2) +" to "+ dubmove.group(3) + dubmove.group(4) + 
 					" and the piece at "+ dubmove.group(5) + dubmove.group(6) + " to "+ dubmove.group(7) + dubmove.group(8));
+		}
 
 		else
-			return false;
+			throw new Exception("Invalid Move!");
 
 
-		return true;
+		return false;
 	}
 	public boolean check(Board b){
-		
+
+		//b.board[b.getdKingx()][b.getdKingy()].getP()
 		return false;
-		
+
 	}
 }
