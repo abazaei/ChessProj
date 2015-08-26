@@ -3,10 +3,13 @@ package board;
 
 import java.util.Arrays;
 
+import mainmenu.moveManager;
 import pieces.*;
 
 
 public class Board {
+
+	moveManager mManager;
 
 	public Tile[][] board = new Tile[8][8];
 	int lKingx = 0;
@@ -76,10 +79,10 @@ public class Board {
 		board[7][1].setP(new Pawn("d"));
 
 		board[0][7].setP(new Rook("l"));
-//		board[1][7].setP(new Knight("l"));
-//		board[2][7].setP(new Bishop("l"));
+		//		board[1][7].setP(new Knight("l"));
+		//		board[2][7].setP(new Bishop("l"));
 		board[4][7].setP(new King("l"));
-//		board[3][7].setP(new Queen("l"));
+		//		board[3][7].setP(new Queen("l"));
 		board[5][7].setP(new Bishop("l"));
 		board[6][7].setP(new Knight("l"));
 		board[7][7].setP(new Rook("l"));
@@ -103,26 +106,87 @@ public class Board {
 					board[i][j].getP().setLetterloc(i);
 					board[i][j].getP().setNumloc(j);
 					if(board[i][j].getP().getTeam() == "l" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
-						//LOOP THROUGH entire board looking for a piece
-						//Then inside that^ , LOOP THROUGH ENTIRE BOARD, PASSING EACH POSITION in the move(Piece, string, board)
-						//
-						
-						
+						/*
+						   LOOP THROUGH EACH TILE, GET THE PIECE, SEE IF YOU CAN MOVE TO THE KING BY PASSING THE KING x King Y shit 
+						   you made above. Something weird with pawns that Tyler said just figure it out.
+						 */
+
+
 						this.lKingx = i;
 						this.lKingy = j;
-						
-						
+
+
 					}
 					else if(board[i][j].getP().getTeam() == "d" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
 						this.dKingx = i;
 						this.dKingy = j;
 					}
-					
-				}
 
+				}
+				if(isLightChecked(board[i][j]))
+					mManager.setLightKingChecked(true);
+				else if(isDarkChecked(board[i][j]))
+					mManager.setDarkKingChecked(true);
 			}
 		}
 	}
+
+	public Tile[][] copy(Tile[][] b){
+		Tile[][] tempBoard = new Tile[8][8];
+		
+		for (int i = 0; i < tempBoard.length; i++) {
+			for(int j = 0; j < tempBoard[i].length; j++){
+				tempBoard[i][j] = new Tile();
+				tempBoard[i][j].setXcoord(i);
+				tempBoard[i][j].setYcoord(j);
+			}
+		}
+
+		for (int i = 0; i < b.length; i++) {
+			for(int j = 0; j < b[i].length; j++){
+				if(b[i][j].getP()!=null){
+					tempBoard[i][j].setP(b[i][j].getP());
+//					tempBoard[i][j].getP().setLetterloc(i);
+//					tempBoard[i][j].getP().setNumloc(j);
+					if(b[i][j].getP().getTeam() == "l" && b[i][j].getP().getPiece().equalsIgnoreCase("k")){
+						/*
+						   LOOP THROUGH EACH TILE, GET THE PIECE, SEE IF YOU CAN MOVE TO THE KING BY PASSING THE KING x King Y shit 
+						   you made above. Something weird with pawns that Tyler said just figure it out.
+						 */
+
+
+						this.lKingx = i;
+						this.lKingy = j;
+
+
+					}
+					else if(b[i][j].getP().getTeam() == "d" && b[i][j].getP().getPiece().equalsIgnoreCase("k")){
+						this.dKingx = i;
+						this.dKingy = j;
+					}
+
+				}
+			}
+		}
+		return tempBoard;
+
+	}
+
+	public boolean isDarkChecked(Tile t){
+		if(t.getP().move(t.getP(), board[this.dKingx][this.dKingy], this) && t.getP().getTeam().equals("l")){
+			return true;
+		}
+		return false;
+
+	}
+	public boolean isLightChecked(Tile t){
+		if(t.getP().move(t.getP(), board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){
+			return true;
+		}
+		return false;
+
+	}
+
 
 	public void printBoard(){
 

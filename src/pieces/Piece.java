@@ -180,7 +180,7 @@ public abstract class Piece {
 	private boolean pawnMove(Piece p, Tile destination, Board b) {
 
 
-		//MAKE DOUBLE JUMP ON FIRST MOVE WORK
+		
 
 		if(p.getTeam().equals("d")){
 			if(!(p.getLetterloc()!=destination.getXcoord()) && !b.board[destination.getXcoord()][destination.getYcoord()].isOccupied()){

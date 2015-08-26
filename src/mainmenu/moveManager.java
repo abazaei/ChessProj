@@ -12,6 +12,8 @@ import board.Tile;
 public class moveManager {
 
 	boolean LightTeam = true;
+	private boolean LightKingChecked = false;
+	private boolean DarkKingChecked = false;
 
 	public moveManager(){
 
@@ -28,7 +30,13 @@ public class moveManager {
 		Tile tileOrigin = board.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 
 
+		//GO INTO THE MOVE LOGIC AND MAKE IT SO THAT IT CHECKS IF THE MOVE HAS BROUGHT THEM OUT OF CHECK.
+		//
+		
+		//Also implement a way for the current move checking methods to NOT ALLOW moves to check.
+		
 		if(LightTeam && tileOrigin.getP().getTeam().equals("l")){
+			
 
 			if(string.length() == 4 || string.length() == 5){
 				if(placeMove(string,board)){
@@ -468,5 +476,21 @@ public class moveManager {
 		//b.board[b.getdKingx()][b.getdKingy()].getP()
 		return false;
 
+	}
+
+	public boolean isDarkKingChecked() {
+		return DarkKingChecked;
+	}
+
+	public void setDarkKingChecked(boolean darkKingChecked) {
+		DarkKingChecked = darkKingChecked;
+	}
+
+	public boolean isLightKingChecked() {
+		return LightKingChecked;
+	}
+
+	public void setLightKingChecked(boolean lightKingChecked) {
+		LightKingChecked = lightKingChecked;
 	}
 }
