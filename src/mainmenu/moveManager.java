@@ -12,8 +12,8 @@ import board.Tile;
 public class moveManager {
 
 	boolean LightTeam = true;
-	private boolean LightKingChecked = false;
-	private boolean DarkKingChecked = false;
+	private static boolean LightKingChecked = false;
+	private static boolean DarkKingChecked = false;
 
 	public moveManager(){
 
@@ -32,18 +32,18 @@ public class moveManager {
 
 		//GO INTO THE MOVE LOGIC AND MAKE IT SO THAT IT CHECKS IF THE MOVE HAS BROUGHT THEM OUT OF CHECK.
 		//
-		
+
 		//Also implement a way for the current move checking methods to NOT ALLOW moves to check.
-		
+
 		if(LightTeam && tileOrigin.getP().getTeam().equals("l")){
-			
+
 
 			if(string.length() == 4 || string.length() == 5){
 				if(placeMove(string,board)){
 					LightTeam = false;
 				}
 				else if(singleMove(string,board)){
-					System.out.println("Hello");
+//					System.out.println("Hello");
 					LightTeam = false;
 				}
 
@@ -332,9 +332,49 @@ public class moveManager {
 				if(!tileDestination.getP().getTeam().equals(tileOrigin.getP().getTeam())){
 
 					if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
-						System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
-						tileDestination.setP(tileOrigin.getP());
-						tileOrigin.setP(null);
+
+							Board tempBoard = b.copy(b.board);
+							tempBoard.scanBoard();
+							
+							Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
+							Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
+
+							
+							if(tileOriginCheck.getP().getTeam().equals("l") && LightKingChecked){
+								tileDestinationCheck.setP(tileOriginCheck.getP());
+								tileOriginCheck.setP(null);
+								tempBoard.scanBoard();				//This should set LightKingChecked
+								if(LightKingChecked){
+									throw new Exception("Light is still in check!");
+								}
+								else{
+									tileDestination.setP(tileOrigin.getP());
+									tileOrigin.setP(null);
+								}
+									
+								
+							}
+							else if(tileOriginCheck.getP().getTeam().equals("d") && DarkKingChecked){
+								tileDestinationCheck.setP(tileOriginCheck.getP());
+								tileOriginCheck.setP(null);
+								tempBoard.scanBoard();				//This should set DarkKingChecked
+								if(DarkKingChecked){
+									throw new Exception("Dark is still in check!");
+								}
+								else{
+									tileDestination.setP(tileOrigin.getP());
+									tileOrigin.setP(null);
+								}
+							}
+						
+
+							System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
+
+
+							tileDestination.setP(tileOrigin.getP());
+							tileOrigin.setP(null);
+						
+
 					} else {
 						String cantmovethere = "The "+ tileOrigin.getP().getFullteam()+" "+tileOrigin.getP().getFullPiece() + " cannot move to column " +
 								(tileDestination.getXcoord()+1)+ " row " + (tileDestination.getYcoord()+1);
@@ -370,11 +410,48 @@ public class moveManager {
 				}
 			}
 			else if(!tileDestination.isOccupied()){
-				System.out.println("TileDestination XCoord = "+tileDestination.getXcoord());
-				System.out.println("TileDestination YCoord = "+tileDestination.getYcoord());
-		
+//				System.out.println("TileDestination XCoord = "+tileDestination.getXcoord());
+//				System.out.println("TileDestination YCoord = "+tileDestination.getYcoord());
+
 				if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
 					//System.out.println("HelloItSucceded");
+					
+					Board tempBoard = b.copy(b.board);
+					tempBoard.scanBoard();
+					
+					Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
+					Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
+
+					
+					if(tileOriginCheck.getP().getTeam().equals("l") && LightKingChecked){
+						tileDestinationCheck.setP(tileOriginCheck.getP());
+						tileOriginCheck.setP(null);
+						tempBoard.scanBoard();				//This should set LightKingChecked
+						if(LightKingChecked){
+							throw new Exception("Light is still in check!");
+						}
+						else{
+							tileDestination.setP(tileOrigin.getP());
+							tileOrigin.setP(null);
+							
+						}
+							
+						
+					}
+					else if(tileOriginCheck.getP().getTeam().equals("d") && DarkKingChecked){
+						tileDestinationCheck.setP(tileOriginCheck.getP());
+						tileOriginCheck.setP(null);
+						tempBoard.scanBoard();				//This should set DarkKingChecked
+						if(DarkKingChecked){
+							throw new Exception("Dark is still in check!");
+						}
+						else{
+							tileDestination.setP(tileOrigin.getP());
+							tileOrigin.setP(null);
+						}
+					}
+				
+					
 					System.out.println("Move the "+tileOrigin.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
 					tileDestination.setP(tileOrigin.getP());
 					tileOrigin.setP(null);
@@ -399,8 +476,8 @@ public class moveManager {
 				}
 				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 2 && tileDestination.getYcoord() == 7)){
 					System.out.println("WE ARE IN 2,7");
-					
-					
+
+
 					//THIS ONE IS COMPLETE . DO IT FOR THE TOP ONE!!! test it first arush you think you might have just finished it ^
 					if(b.board[tileOrigin.getXcoord()-1][tileOrigin.getYcoord()].getP() == null){
 						System.out.println("First Inner If done");

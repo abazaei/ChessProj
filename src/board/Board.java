@@ -9,7 +9,7 @@ import pieces.*;
 
 public class Board {
 
-	moveManager mManager;
+	moveManager mManager = new moveManager();
 
 	public Tile[][] board = new Tile[8][8];
 	int lKingx = 0;
@@ -123,31 +123,35 @@ public class Board {
 					}
 
 				}
-				if(isLightChecked(board[i][j]))
+				if(isLightChecked(board[i][j])){
+					System.out.println("Is Light in Check: "+isLightChecked(board[i][j]));
 					mManager.setLightKingChecked(true);
-				else if(isDarkChecked(board[i][j]))
+				}
+				else if(isDarkChecked(board[i][j])){
+					System.out.println("Is Dark in Check: "+isDarkChecked(board[i][j]));
 					mManager.setDarkKingChecked(true);
+				}
 			}
 		}
 	}
 
-	public Tile[][] copy(Tile[][] b){
-		Tile[][] tempBoard = new Tile[8][8];
-		
-		for (int i = 0; i < tempBoard.length; i++) {
-			for(int j = 0; j < tempBoard[i].length; j++){
-				tempBoard[i][j] = new Tile();
-				tempBoard[i][j].setXcoord(i);
-				tempBoard[i][j].setYcoord(j);
+	public Board copy(Tile[][] b){
+		Board tempBoard = new Board();
+
+		for (int i = 0; i < tempBoard.board.length; i++) {
+			for(int j = 0; j < tempBoard.board[i].length; j++){
+				tempBoard.board[i][j] = new Tile();
+				tempBoard.board[i][j].setXcoord(i);
+				tempBoard.board[i][j].setYcoord(j);
 			}
 		}
 
 		for (int i = 0; i < b.length; i++) {
 			for(int j = 0; j < b[i].length; j++){
 				if(b[i][j].getP()!=null){
-					tempBoard[i][j].setP(b[i][j].getP());
-//					tempBoard[i][j].getP().setLetterloc(i);
-//					tempBoard[i][j].getP().setNumloc(j);
+					tempBoard.board[i][j].setP(b[i][j].getP());
+					//					tempBoard[i][j].getP().setLetterloc(i);
+					//					tempBoard[i][j].getP().setNumloc(j);
 					if(b[i][j].getP().getTeam() == "l" && b[i][j].getP().getPiece().equalsIgnoreCase("k")){
 						/*
 						   LOOP THROUGH EACH TILE, GET THE PIECE, SEE IF YOU CAN MOVE TO THE KING BY PASSING THE KING x King Y shit 
@@ -173,15 +177,19 @@ public class Board {
 	}
 
 	public boolean isDarkChecked(Tile t){
-		if(t.getP().move(t.getP(), board[this.dKingx][this.dKingy], this) && t.getP().getTeam().equals("l")){
-			return true;
+		if(t.getP() != null){
+			if(t.getP().move(t.getP(), board[this.dKingx][this.dKingy], this) && t.getP().getTeam().equals("l")){
+				return true;
+			}
 		}
 		return false;
 
 	}
 	public boolean isLightChecked(Tile t){
-		if(t.getP().move(t.getP(), board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){
-			return true;
+		if(t.getP() != null){
+			if(t.getP().move(t.getP(), board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){
+				return true;
+			}
 		}
 		return false;
 
