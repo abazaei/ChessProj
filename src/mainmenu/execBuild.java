@@ -53,20 +53,23 @@ public class execBuild {
 							if(line.length() == 4 || line.length() == 5){
 								try{
 									board.scanBoard();
+								    //LOOK AT WHERE YOU SCAN THE BOARD TOO MUCH, BEFORE YOU GET TO MOVE AGAIN
 									mmanager.moveReader(line,board);
 									if(ifverbose){
+										board.scanBoard();
 										board.printBoard();
 									}
 								}
 								catch (Exception e){
-									System.out.println(e.getMessage());
+									System.out.println(e.getMessage()+" CATCH");
+									
 									continue;
 								}
 
 							}
 							else if(line.length() == 8){
 								try{
-									board.scanBoard();
+								
 									mmanager.moveReader(line,board);
 									if(ifverbose){
 										board.printBoard();
@@ -80,7 +83,7 @@ public class execBuild {
 							else 
 								System.out.println("Not a valid command, try again!");
 						}
-						board.scanBoard();
+						
 						board.printBoard();
 					}
 					else{
@@ -93,12 +96,13 @@ public class execBuild {
 								String userin = in.nextLine();
 
 								if(userin.length() == 4 || userin.length() == 5){
-
+								
 									commands.add(userin);
 
 
 								}
-								else if(userin.length() == 8){			
+								else if(userin.length() == 8){	
+									
 									commands.add(userin);
 
 								}

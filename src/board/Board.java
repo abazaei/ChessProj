@@ -99,7 +99,8 @@ public class Board {
 
 	}
 	public void scanBoard(){
-
+		mManager.setDarkKingChecked(false);
+		mManager.setLightKingChecked(false);
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
 				if(board[i][j].getP()!=null){
@@ -124,13 +125,16 @@ public class Board {
 
 				}
 				if(isLightChecked(board[i][j])){
-					System.out.println("Is Light in Check: "+isLightChecked(board[i][j]));
+					
 					mManager.setLightKingChecked(true);
+					
 				}
-				else if(isDarkChecked(board[i][j])){
-					System.out.println("Is Dark in Check: "+isDarkChecked(board[i][j]));
+			
+				if(isDarkChecked(board[i][j])){
+					System.out.println("Is Dark now in Check: "+mManager.isDarkKingChecked());
 					mManager.setDarkKingChecked(true);
 				}
+				
 			}
 		}
 	}
@@ -152,7 +156,7 @@ public class Board {
 					tempBoard.board[i][j].setP(b[i][j].getP());
 					//					tempBoard[i][j].getP().setLetterloc(i);
 					//					tempBoard[i][j].getP().setNumloc(j);
-					if(b[i][j].getP().getTeam() == "l" && b[i][j].getP().getPiece().equalsIgnoreCase("k")){
+					if(tempBoard.board[i][j].getP().getTeam() == "l" && tempBoard.board[i][j].getP().getPiece().equalsIgnoreCase("k")){
 						/*
 						   LOOP THROUGH EACH TILE, GET THE PIECE, SEE IF YOU CAN MOVE TO THE KING BY PASSING THE KING x King Y shit 
 						   you made above. Something weird with pawns that Tyler said just figure it out.
@@ -164,7 +168,7 @@ public class Board {
 
 
 					}
-					else if(b[i][j].getP().getTeam() == "d" && b[i][j].getP().getPiece().equalsIgnoreCase("k")){
+					else if(tempBoard.board[i][j].getP().getTeam() == "d" && tempBoard.board[i][j].getP().getPiece().equalsIgnoreCase("k")){
 						this.dKingx = i;
 						this.dKingy = j;
 					}
@@ -187,6 +191,8 @@ public class Board {
 	}
 	public boolean isLightChecked(Tile t){
 		if(t.getP() != null){
+//			System.out.println("Kingx " +lKingx);
+//			System.out.println("Kingy " +lKingy);
 			if(t.getP().move(t.getP(), board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){
 				return true;
 			}

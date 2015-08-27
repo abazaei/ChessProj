@@ -26,7 +26,7 @@ public class moveManager {
 
 		Matcher singmove = Pattern.compile("([a-hA-H])([1-8])([a-hA-H])([1-8])(\\*)?").matcher(string);
 		singmove.find();
-		System.out.println(LightTeam);
+		
 		Tile tileOrigin = board.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 
 
@@ -417,16 +417,20 @@ public class moveManager {
 					//System.out.println("HelloItSucceded");
 					
 					Board tempBoard = b.copy(b.board);
+					
 					tempBoard.scanBoard();
+					System.out.println("SCANNED TEMP BOARD and The Light King is in Check: " + LightKingChecked);
 					
 					Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 					Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
 
 					
+					
 					if(tileOriginCheck.getP().getTeam().equals("l") && LightKingChecked){
 						tileDestinationCheck.setP(tileOriginCheck.getP());
 						tileOriginCheck.setP(null);
 						tempBoard.scanBoard();				//This should set LightKingChecked
+						System.out.println("LightKing is in check!");
 						if(LightKingChecked){
 							throw new Exception("Light is still in check!");
 						}
@@ -452,7 +456,7 @@ public class moveManager {
 					}
 				
 					
-					System.out.println("Move the "+tileOrigin.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
+					System.out.println("Move the "+tileOrigin.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4) + " LightCheck: "+this.LightKingChecked);
 					tileDestination.setP(tileOrigin.getP());
 					tileOrigin.setP(null);
 				}
