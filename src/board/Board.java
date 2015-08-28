@@ -103,7 +103,7 @@ public class Board {
 		mManager.setLightKingChecked(false);
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
-				if(board[i][j].getP()!=null){
+				if(board[i][j].getP()!=null){ // THE ULTIMATE BUG HAS BEEN FOUND, FIND WHERE KING IS. THEN RUN LOOP AGAIN
 					board[i][j].getP().setLetterloc(i);
 					board[i][j].getP().setNumloc(j);
 					if(board[i][j].getP().getTeam() == "l" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
@@ -124,18 +124,21 @@ public class Board {
 					}
 
 				}
+			}
+		}
+		for (int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++){
 				if(isLightChecked(board[i][j])){
-					
+
 					System.out.println("Uh oh, Light is in check!");
 					mManager.setLightKingChecked(true);
-					
+
 				}
-			
+
 				if(isDarkChecked(board[i][j])){
 					System.out.println("Uh oh, Dark is in check!");
 					mManager.setDarkKingChecked(true);
 				}
-				
 			}
 		}
 	}
@@ -192,10 +195,10 @@ public class Board {
 	}
 	public boolean isLightChecked(Tile t){
 		if(t.getP() != null){
-//			System.out.println("Kingx " +lKingx);
-//			System.out.println("Kingy " +lKingy);
+//			System.out.println("Checking if light king is in check from "+ t.getP()+ " at x: " +(t.getXcoord()) + " and y: "+ t.getYcoord() );
+//			System.out.println(lKingx +" "+lKingy);
 			if(t.getP().move(t.getP(), this.board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){  // <----- MAJOR ISSUE. The bishop logic is messed I believe
-				
+				System.out.println("We are in check!");
 				return true;
 			}
 		}

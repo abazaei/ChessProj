@@ -163,8 +163,7 @@ public abstract class Piece {
 				//System.out.println("This is SouthEast");
 				for(int i = p.getLetterloc() + 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j++){
 					System.out.println("Trying BIshop Move x: " + i + " y: "+ j);
-					
-					System.out.println(b.board[i][j].getP().getFullPiece());
+
 					if(b.board[i][j].isOccupied()){
 						System.out.println("something in way of bishop move");
 						//System.out.println(i+","+j + " This is SouthEast");
