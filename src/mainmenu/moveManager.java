@@ -26,7 +26,7 @@ public class moveManager {
 
 		Matcher singmove = Pattern.compile("([a-hA-H])([1-8])([a-hA-H])([1-8])(\\*)?").matcher(string);
 		singmove.find();
-		
+
 		Tile tileOrigin = board.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 
 
@@ -43,7 +43,7 @@ public class moveManager {
 					LightTeam = false;
 				}
 				else if(singleMove(string,board)){
-					
+
 					LightTeam = false;
 				}
 
@@ -333,49 +333,65 @@ public class moveManager {
 
 					if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
 
-							Board tempBoard = b.copy(b.board);
-							
-							
-							Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
-							Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
+						Board tempBoard = b.copy(b.board);
 
-							
-							if(tileOriginCheck.getP().getTeam().equals("l")){
-								tileDestinationCheck.setP(tileOriginCheck.getP());
-								tileOriginCheck.setP(null);
-							
-								tempBoard.scanBoard();				//This should set LightKingChecked
-								if(LightKingChecked){
-									
-									throw new Exception("Light is still in check!");
-								}
-								else{
-									tileDestination.setP(tileOrigin.getP());
-									tileOrigin.setP(null);
-								}
-									
-								
+
+						Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
+						Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
+
+
+						if(tileOriginCheck.getP().getTeam().equals("l")){
+//							System.out.println("WOAH");
+							tileDestinationCheck.setP(tileOriginCheck.getP());
+							tileOriginCheck.setP(null);
+
+//
+//							System.out.println("======COPY=====");
+//							tempBoard.printBoard();
+//							System.out.println("======COPY=====");
+
+
+
+							//								System.out.println("======REAL=====");
+							//								b.printBoard();
+							//								System.out.println("======REAL=====");
+
+
+							tempBoard.scanBoard();//This should set LightKingChecked
+							System.out.println("LightKingChecked: "+LightKingChecked);
+							if(LightKingChecked){
+
+								throw new Exception("Light is still in check! Light Please try another move!");
 							}
-							else if(tileOriginCheck.getP().getTeam().equals("d")){
-								tileDestinationCheck.setP(tileOriginCheck.getP());
-								tileOriginCheck.setP(null);
-								tempBoard.scanBoard();				//This should set DarkKingChecked
-								if(DarkKingChecked){
-									throw new Exception("Dark is still in check!");
-								}
-								else{
-									tileDestination.setP(tileOrigin.getP());
-									tileOrigin.setP(null);
-								}
+							else{
+
+								tileDestination.setP(tileOrigin.getP());
+								tileOrigin.setP(null);
 							}
-						
-
-							System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
 
 
-							tileDestination.setP(tileOrigin.getP());
-							tileOrigin.setP(null);
-						
+						}
+						else if(tileOriginCheck.getP().getTeam().equals("d")){
+							tileDestinationCheck.setP(tileOriginCheck.getP());
+							tileOriginCheck.setP(null);
+							tempBoard.scanBoard();				//This should set DarkKingChecked
+							if(DarkKingChecked){
+								throw new Exception("Dark is still in check!");
+							}
+							else{
+								tileDestination.setP(tileOrigin.getP());
+								tileOrigin.setP(null);
+
+							}
+						}
+
+
+						System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
+
+//
+//						tileDestination.setP(tileOrigin.getP());
+//						tileOrigin.setP(null);
+
 
 					} else {
 						String cantmovethere = "The "+ tileOrigin.getP().getFullteam()+" "+tileOrigin.getP().getFullPiece() + " cannot move to column " +
@@ -412,52 +428,52 @@ public class moveManager {
 				}
 			}
 			else if(!tileDestination.isOccupied()){
-//				System.out.println("TileDestination XCoord = "+tileDestination.getXcoord());
-//				System.out.println("TileDestination YCoord = "+tileDestination.getYcoord());
+				//				System.out.println("TileDestination XCoord = "+tileDestination.getXcoord());
+				//				System.out.println("TileDestination YCoord = "+tileDestination.getYcoord());
 
 				if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
 					//System.out.println("HelloItSucceded");
-					
+
 					Board tempBoard = b.copy(b.board);
-					
-					
+
+
 					System.out.println("SCANNED TEMP BOARD and The Light King is in Check: " + LightKingChecked);
-					
+
 					Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 					Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
 
-					
-					
+
+
 					if(tileOriginCheck.getP().getTeam().equals("l")){
-						System.out.println("WOAH");
+//						System.out.println("WOAH");
 						tileDestinationCheck.setP(tileOriginCheck.getP());
 						tileOriginCheck.setP(null);
-						
-						
-						System.out.println("======COPY=====");
-						tempBoard.printBoard();
-						System.out.println("======COPY=====");
-						
-						
-						
-//						System.out.println("======REAL=====");
-//						b.printBoard();
-//						System.out.println("======REAL=====");
-						
-						
+
+
+//						System.out.println("======COPY=====");
+//						tempBoard.printBoard();
+//						System.out.println("======COPY=====");
+
+
+
+						//						System.out.println("======REAL=====");
+						//						b.printBoard();
+						//						System.out.println("======REAL=====");
+
+
 						tempBoard.scanBoard();//This should set LightKingChecked
 						System.out.println("LightKingChecked: "+LightKingChecked);
 						if(LightKingChecked){
-							
-							throw new Exception("Light is still in check!");
+
+							throw new Exception("Light is still in check! Light Please try another move!");
 						}
 						else{
-							
+
 							tileDestination.setP(tileOrigin.getP());
 							tileOrigin.setP(null);
 						}
-							
-						
+
+
 					}
 					else if(tileOriginCheck.getP().getTeam().equals("d")){
 						tileDestinationCheck.setP(tileOriginCheck.getP());
@@ -469,14 +485,14 @@ public class moveManager {
 						else{
 							tileDestination.setP(tileOrigin.getP());
 							tileOrigin.setP(null);
-							
+
 						}
 					}
-				
-					
+
+
 					System.out.println("Move the "+tileDestination.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4) + " LightCheck: "+this.LightKingChecked);
-//					tileDestination.setP(tileOrigin.getP());
-//					tileOrigin.setP(null);
+					//					tileDestination.setP(tileOrigin.getP());
+					//					tileOrigin.setP(null);
 				}
 				//CastleLight
 				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 6 && tileDestination.getYcoord() == 7)){

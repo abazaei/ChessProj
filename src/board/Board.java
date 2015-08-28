@@ -60,9 +60,9 @@ public class Board {
 		//		board[6][2].setP(new Knight("d"));
 
 		board[0][0].setP(new Rook("d"));
-		board[1][0].setP(new Knight("d"));
-		board[2][0].setP(new Bishop("d"));
-		board[3][0].setP(new Queen("d"));
+//		board[1][0].setP(new Knight("d"));
+//		board[2][0].setP(new Bishop("d"));
+//		board[3][0].setP(new Queen("d"));
 		board[4][0].setP(new King("d"));
 		board[5][0].setP(new Bishop("d"));
 		board[6][0].setP(new Knight("d"));
@@ -79,10 +79,10 @@ public class Board {
 		board[7][1].setP(new Pawn("d"));
 
 		board[0][7].setP(new Rook("l"));
-		//		board[1][7].setP(new Knight("l"));
-		//		board[2][7].setP(new Bishop("l"));
+		board[1][7].setP(new Knight("l"));
+		board[2][7].setP(new Bishop("l"));
 		board[4][7].setP(new King("l"));
-		//		board[3][7].setP(new Queen("l"));
+		board[3][7].setP(new Queen("l"));
 		board[5][7].setP(new Bishop("l"));
 		board[6][7].setP(new Knight("l"));
 		board[7][7].setP(new Rook("l"));
@@ -198,7 +198,7 @@ public class Board {
 //			System.out.println("Checking if light king is in check from "+ t.getP()+ " at x: " +(t.getXcoord()) + " and y: "+ t.getYcoord() );
 //			System.out.println(lKingx +" "+lKingy);
 			if(t.getP().move(t.getP(), this.board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){  // <----- MAJOR ISSUE. The bishop logic is messed I believe
-				System.out.println("We are in check!");
+				
 				return true;
 			}
 		}
