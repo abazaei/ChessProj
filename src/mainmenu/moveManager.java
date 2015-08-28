@@ -43,7 +43,7 @@ public class moveManager {
 					LightTeam = false;
 				}
 				else if(singleMove(string,board)){
-//					System.out.println("Hello");
+					
 					LightTeam = false;
 				}
 
@@ -334,17 +334,19 @@ public class moveManager {
 					if(tileOrigin.getP().move(tileOrigin.getP(), tileDestination, b)){
 
 							Board tempBoard = b.copy(b.board);
-							tempBoard.scanBoard();
+							
 							
 							Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 							Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
 
 							
-							if(tileOriginCheck.getP().getTeam().equals("l") && LightKingChecked){
+							if(tileOriginCheck.getP().getTeam().equals("l")){
 								tileDestinationCheck.setP(tileOriginCheck.getP());
 								tileOriginCheck.setP(null);
+							
 								tempBoard.scanBoard();				//This should set LightKingChecked
 								if(LightKingChecked){
+									
 									throw new Exception("Light is still in check!");
 								}
 								else{
@@ -354,7 +356,7 @@ public class moveManager {
 									
 								
 							}
-							else if(tileOriginCheck.getP().getTeam().equals("d") && DarkKingChecked){
+							else if(tileOriginCheck.getP().getTeam().equals("d")){
 								tileDestinationCheck.setP(tileOriginCheck.getP());
 								tileOriginCheck.setP(null);
 								tempBoard.scanBoard();				//This should set DarkKingChecked
@@ -418,7 +420,7 @@ public class moveManager {
 					
 					Board tempBoard = b.copy(b.board);
 					
-					tempBoard.scanBoard();
+					
 					System.out.println("SCANNED TEMP BOARD and The Light King is in Check: " + LightKingChecked);
 					
 					Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
@@ -426,23 +428,38 @@ public class moveManager {
 
 					
 					
-					if(tileOriginCheck.getP().getTeam().equals("l") && LightKingChecked){
+					if(tileOriginCheck.getP().getTeam().equals("l")){
+						System.out.println("WOAH");
 						tileDestinationCheck.setP(tileOriginCheck.getP());
 						tileOriginCheck.setP(null);
-						tempBoard.scanBoard();				//This should set LightKingChecked
-						System.out.println("LightKing is in check!");
+						
+						
+						System.out.println("======COPY=====");
+						tempBoard.printBoard();
+						System.out.println("======COPY=====");
+						
+						
+						
+//						System.out.println("======REAL=====");
+//						b.printBoard();
+//						System.out.println("======REAL=====");
+						
+						
+						tempBoard.scanBoard();//This should set LightKingChecked
+						System.out.println("LightKingChecked: "+LightKingChecked);
 						if(LightKingChecked){
+							
 							throw new Exception("Light is still in check!");
 						}
 						else{
+							
 							tileDestination.setP(tileOrigin.getP());
 							tileOrigin.setP(null);
-							
 						}
 							
 						
 					}
-					else if(tileOriginCheck.getP().getTeam().equals("d") && DarkKingChecked){
+					else if(tileOriginCheck.getP().getTeam().equals("d")){
 						tileDestinationCheck.setP(tileOriginCheck.getP());
 						tileOriginCheck.setP(null);
 						tempBoard.scanBoard();				//This should set DarkKingChecked
@@ -452,13 +469,14 @@ public class moveManager {
 						else{
 							tileDestination.setP(tileOrigin.getP());
 							tileOrigin.setP(null);
+							
 						}
 					}
 				
 					
-					System.out.println("Move the "+tileOrigin.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4) + " LightCheck: "+this.LightKingChecked);
-					tileDestination.setP(tileOrigin.getP());
-					tileOrigin.setP(null);
+					System.out.println("Move the "+tileDestination.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4) + " LightCheck: "+this.LightKingChecked);
+//					tileDestination.setP(tileOrigin.getP());
+//					tileOrigin.setP(null);
 				}
 				//CastleLight
 				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 6 && tileDestination.getYcoord() == 7)){
@@ -559,7 +577,7 @@ public class moveManager {
 
 	}
 
-	public boolean isDarkKingChecked() {
+	public boolean getDarkKingChecked() {
 		return DarkKingChecked;
 	}
 
@@ -567,7 +585,7 @@ public class moveManager {
 		DarkKingChecked = darkKingChecked;
 	}
 
-	public boolean isLightKingChecked() {
+	public boolean getLightKingChecked() {
 		return LightKingChecked;
 	}
 

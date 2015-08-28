@@ -126,12 +126,13 @@ public class Board {
 				}
 				if(isLightChecked(board[i][j])){
 					
+					System.out.println("Uh oh, Light is in check!");
 					mManager.setLightKingChecked(true);
 					
 				}
 			
 				if(isDarkChecked(board[i][j])){
-					System.out.println("Is Dark now in Check: "+mManager.isDarkKingChecked());
+					System.out.println("Uh oh, Dark is in check!");
 					mManager.setDarkKingChecked(true);
 				}
 				
@@ -193,7 +194,8 @@ public class Board {
 		if(t.getP() != null){
 //			System.out.println("Kingx " +lKingx);
 //			System.out.println("Kingy " +lKingy);
-			if(t.getP().move(t.getP(), board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){
+			if(t.getP().move(t.getP(), this.board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){  // <----- MAJOR ISSUE. The bishop logic is messed I believe
+				
 				return true;
 			}
 		}

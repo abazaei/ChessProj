@@ -52,17 +52,18 @@ public class execBuild {
 						while ((line = br.readLine()) != null) {
 							if(line.length() == 4 || line.length() == 5){
 								try{
+									System.out.println("ABOUT TO SCAN REAL BOARD");
 									board.scanBoard();
 								    //LOOK AT WHERE YOU SCAN THE BOARD TOO MUCH, BEFORE YOU GET TO MOVE AGAIN
 									mmanager.moveReader(line,board);
 									if(ifverbose){
-										board.scanBoard();
+										
 										board.printBoard();
 									}
 								}
 								catch (Exception e){
 									System.out.println(e.getMessage()+" CATCH");
-									
+									e.printStackTrace();
 									continue;
 								}
 
@@ -72,6 +73,7 @@ public class execBuild {
 								
 									mmanager.moveReader(line,board);
 									if(ifverbose){
+										
 										board.printBoard();
 									}
 								}
@@ -122,6 +124,7 @@ public class execBuild {
 						}
 						for(int i = 0; i < commands.size(); i++){
 							try{
+								
 								board.scanBoard();
 								mmanager.moveReader(commands.get(i),board);
 
