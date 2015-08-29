@@ -495,16 +495,16 @@ public class moveManager {
 					//					tileOrigin.setP(null);
 				}
 				//CastleLight
-				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 6 && tileDestination.getYcoord() == 7)){
+				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 6 && tileDestination.getYcoord() == 7) && LightKingChecked == false){
 					System.out.println("WE ARE IN 6,7");
 					if(b.board[tileOrigin.getXcoord()+1][tileOrigin.getYcoord()].getP() == null){
-						System.out.println("First Inner If done");
-						if(b.board[tileOrigin.getXcoord()-2][tileOrigin.getYcoord()].getP() == null){
+						System.out.println("First Inner If done-RightBottom");
+						if(b.board[tileOrigin.getXcoord()+2][tileOrigin.getYcoord()].getP() == null){
 							System.out.println("Second Inner If done");
 							System.out.println(b.board[0][7].getP().getPiece());
-							if(b.board[7][7].getP().getPiece().equals("r") && b.board[0][7].getP().getTeam().equals("l")){
+							if(b.board[7][7].getP().getPiece().equals("r") && b.board[7][7].getP().getTeam().equals("l")){
 								System.out.println("In The Moving If!");
-								b.board[5][7].setP(b.board[0][7].getP());
+								b.board[5][7].setP(b.board[7][7].getP());
 								b.board[7][7].setP(null);
 								tileDestination.setP(tileOrigin.getP());
 								tileOrigin.setP(null);
@@ -512,7 +512,7 @@ public class moveManager {
 						}
 					}
 				}
-				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 2 && tileDestination.getYcoord() == 7)){
+				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("l") && (tileDestination.getXcoord() == 2 && tileDestination.getYcoord() == 7)&& LightKingChecked == false){
 					System.out.println("WE ARE IN 2,7");
 
 
@@ -532,6 +532,40 @@ public class moveManager {
 						}
 					}
 
+				}
+				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("d") && (tileDestination.getXcoord() == 2 && tileDestination.getYcoord() == 0) && DarkKingChecked == false){
+					System.out.println("WE ARE IN 6,7");
+					if(b.board[tileOrigin.getXcoord()-1][tileOrigin.getYcoord()].getP() == null){
+						System.out.println("First Inner If done");
+						if(b.board[tileOrigin.getXcoord()-3][tileOrigin.getYcoord()].getP() == null){
+							System.out.println("Second Inner If done");
+							System.out.println(b.board[0][0].getP().getPiece());
+							if(b.board[0][0].getP().getPiece().equals("r") && b.board[0][0].getP().getTeam().equals("d")){
+								System.out.println("In The Moving If!");
+								b.board[3][0].setP(b.board[0][0].getP());
+								b.board[0][0].setP(null);
+								tileDestination.setP(tileOrigin.getP());
+								tileOrigin.setP(null);
+							}
+						}
+					}
+				}
+				else if(tileOrigin.getP().getPiece().equalsIgnoreCase("k") && tileOrigin.getP().getTeam().equals("d") && (tileDestination.getXcoord() == 6 && tileDestination.getYcoord() == 0)&& DarkKingChecked == false){
+					System.out.println("WE ARE IN 6,7");
+					if(b.board[tileOrigin.getXcoord()+1][tileOrigin.getYcoord()].getP() == null){
+						System.out.println("First Inner If done");
+						if(b.board[tileOrigin.getXcoord()+1][tileOrigin.getYcoord()].getP() == null){
+							System.out.println("Second Inner If done");
+							System.out.println(b.board[7][0].getP().getPiece());
+							if(b.board[7][0].getP().getPiece().equals("r") && b.board[7][0].getP().getTeam().equals("d")){
+								System.out.println("In The Moving If!");
+								b.board[5][0].setP(b.board[7][0].getP());
+								b.board[7][0].setP(null);
+								tileDestination.setP(tileOrigin.getP());
+								tileOrigin.setP(null);
+							}
+						}
+					}
 				}
 				//CastleDark
 				else {

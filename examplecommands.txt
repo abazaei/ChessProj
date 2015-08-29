@@ -1,12 +1,14 @@
-d7d5
-d2d4
-d8d6
-h2h4
-d6b4
-e1d2
-e1d1
-g8f6
-a2a4
-f6e4
-a4a5
-e4c3
+e7e5
+b1a3
+f8d6
+d2d3
+g8h6
+c1f4
+e8g8
+d1d2
+a8a7
+e1c1
+a7a6
+
+FOR CHECK MATE: 
+TRY EVERY SINGLE MOVE POSSIBLE for each(ever single) PIECE, every time you scan the board.

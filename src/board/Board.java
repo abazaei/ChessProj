@@ -60,9 +60,9 @@ public class Board {
 		//		board[6][2].setP(new Knight("d"));
 
 		board[0][0].setP(new Rook("d"));
-//		board[1][0].setP(new Knight("d"));
-//		board[2][0].setP(new Bishop("d"));
-//		board[3][0].setP(new Queen("d"));
+		board[1][0].setP(new Knight("d"));
+		board[2][0].setP(new Bishop("d"));
+		board[3][0].setP(new Queen("d"));
 		board[4][0].setP(new King("d"));
 		board[5][0].setP(new Bishop("d"));
 		board[6][0].setP(new Knight("d"));
