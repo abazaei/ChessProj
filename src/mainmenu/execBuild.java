@@ -54,26 +54,46 @@ public class execBuild {
 								try{
 									System.out.println("ABOUT TO SCAN REAL BOARD");
 									board.scanBoard();
-								    //LOOK AT WHERE YOU SCAN THE BOARD TOO MUCH, BEFORE YOU GET TO MOVE AGAIN
+
+
+
+
+
+
+									//LOOK AT WHERE YOU SCAN THE BOARD TOO MUCH, BEFORE YOU GET TO MOVE AGAIN
 									mmanager.moveReader(line,board);
 									if(ifverbose){
-										
+
 										board.printBoard();
+										if(mmanager.getLightKingChecked()){
+
+											board.scanBoardforCheckMate();						
+											if(board.checkCheckMateLight(board)){
+												throw new Exception("Light loses! Checkmate");
+											}
+										}
+										else if(mmanager.getDarkKingChecked()){
+
+											board.scanBoardforCheckMate();						
+											if(board.checkCheckMateDark(board)){
+												throw new Exception("Dark loses! Checkmate");
+											}
+										}
 									}
 								}
 								catch (Exception e){
-									System.out.println(e.getMessage()+" CATCH");
-									e.printStackTrace();
+									System.out.println(e.getMessage());
+
 									continue;
 								}
 
 							}
 							else if(line.length() == 8){
 								try{
-								
+
 									mmanager.moveReader(line,board);
 									if(ifverbose){
-										
+
 										board.printBoard();
 									}
 								}
@@ -85,7 +105,7 @@ public class execBuild {
 							else 
 								System.out.println("Not a valid command, try again!");
 						}
-						
+
 						board.printBoard();
 					}
 					else{
@@ -98,13 +118,13 @@ public class execBuild {
 								String userin = in.nextLine();
 
 								if(userin.length() == 4 || userin.length() == 5){
-								
+
 									commands.add(userin);
 
 
 								}
 								else if(userin.length() == 8){	
-									
+
 									commands.add(userin);
 
 								}
@@ -124,8 +144,10 @@ public class execBuild {
 						}
 						for(int i = 0; i < commands.size(); i++){
 							try{
-								
+
 								board.scanBoard();
+
+
 								mmanager.moveReader(commands.get(i),board);
 
 								board.printBoard();

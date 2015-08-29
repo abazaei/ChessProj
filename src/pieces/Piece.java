@@ -89,7 +89,7 @@ public abstract class Piece {
 		else if(p.getPiece().equals("k"))
 			return kingMove(p,t, b);
 		return false;
-
+		
 	}
 	private boolean kingMove(Piece p, Tile destination, Board b) {
 
@@ -162,10 +162,10 @@ public abstract class Piece {
 				//SouthEast [x+1][y+1]
 				//System.out.println("This is SouthEast");
 				for(int i = p.getLetterloc() + 1, j = p.getNumloc() + 1; i != destination.getXcoord() && j != destination.getYcoord();i++,j++){
-					System.out.println("Trying BIshop Move x: " + i + " y: "+ j);
+					
 
 					if(b.board[i][j].isOccupied()){
-						System.out.println("something in way of bishop move");
+					
 						//System.out.println(i+","+j + " This is SouthEast");
 						return false;
 

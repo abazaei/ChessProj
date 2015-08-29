@@ -14,6 +14,26 @@ public class moveManager {
 	boolean LightTeam = true;
 	private static boolean LightKingChecked = false;
 	private static boolean DarkKingChecked = false;
+	public static boolean LightKingCheckMate = false;
+	public static boolean DarkKingCheckMate = false;
+	
+	public static boolean isLightKingCheckMate() {
+		return LightKingCheckMate;
+	}
+
+	public static void setLightKingCheckMate(boolean lightKingCheckMate) {
+		LightKingCheckMate = lightKingCheckMate;
+	}
+
+	public static boolean isDarkKingCheckMate() {
+		return DarkKingCheckMate;
+	}
+
+	public static void setDarkKingCheckMate(boolean darkKingCheckMate) {
+		DarkKingCheckMate = darkKingCheckMate;
+	}
+
+	
 
 	public moveManager(){
 
@@ -62,6 +82,7 @@ public class moveManager {
 
 			if(string.length() == 4 || string.length() == 5){
 				if(placeMove(string,board)){
+
 					LightTeam = true;
 				}
 				else if(singleMove(string,board)){
@@ -341,14 +362,14 @@ public class moveManager {
 
 
 						if(tileOriginCheck.getP().getTeam().equals("l")){
-//							System.out.println("WOAH");
+							//							System.out.println("WOAH");
 							tileDestinationCheck.setP(tileOriginCheck.getP());
 							tileOriginCheck.setP(null);
 
-//
-//							System.out.println("======COPY=====");
-//							tempBoard.printBoard();
-//							System.out.println("======COPY=====");
+							//
+							//							System.out.println("======COPY=====");
+							//							tempBoard.printBoard();
+							//							System.out.println("======COPY=====");
 
 
 
@@ -388,9 +409,9 @@ public class moveManager {
 
 						System.out.println("Move the piece at " + singmove.group(1) + singmove.group(2) +" to capture the piece at "+ singmove.group(3) + singmove.group(4));
 
-//
-//						tileDestination.setP(tileOrigin.getP());
-//						tileOrigin.setP(null);
+						//
+						//						tileDestination.setP(tileOrigin.getP());
+						//						tileOrigin.setP(null);
 
 
 					} else {
@@ -445,14 +466,14 @@ public class moveManager {
 
 
 					if(tileOriginCheck.getP().getTeam().equals("l")){
-//						System.out.println("WOAH");
+						//						System.out.println("WOAH");
 						tileDestinationCheck.setP(tileOriginCheck.getP());
 						tileOriginCheck.setP(null);
 
 
-//						System.out.println("======COPY=====");
-//						tempBoard.printBoard();
-//						System.out.println("======COPY=====");
+						//						System.out.println("======COPY=====");
+						//						tempBoard.printBoard();
+						//						System.out.println("======COPY=====");
 
 
 
@@ -577,7 +598,7 @@ public class moveManager {
 				return true;
 			}
 
-			//Castling below
+
 
 
 			return true;
@@ -620,12 +641,7 @@ public class moveManager {
 
 		return false;
 	}
-	public boolean check(Board b){
 
-		//b.board[b.getdKingx()][b.getdKingy()].getP()
-		return false;
-
-	}
 
 	public boolean getDarkKingChecked() {
 		return DarkKingChecked;

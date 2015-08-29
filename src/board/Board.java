@@ -99,6 +99,10 @@ public class Board {
 
 	}
 	public void scanBoard(){
+
+
+		//	THIS SHOULD PRODUCE CHECK MATE. FIGURE OUT WHERE TO PUT THIS!!!
+
 		mManager.setDarkKingChecked(false);
 		mManager.setLightKingChecked(false);
 		for (int i = 0; i < board.length; i++) {
@@ -128,6 +132,19 @@ public class Board {
 		}
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
+				if(isLightCheckMate(board[i][j])){
+
+
+
+				}
+
+				if(isDarkCheckMate(board[i][j])){
+
+				}
+			}
+		}
+		for (int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++){
 				if(isLightChecked(board[i][j])){
 
 					System.out.println("Uh oh, Light is in check!");
@@ -141,6 +158,146 @@ public class Board {
 				}
 			}
 		}
+	}
+	public boolean checkCheckMateLight(Board b) throws Exception {
+
+		Board tempBoard = b.copy(b.board);
+		for (int z = 0; z < tempBoard.board.length; z++) {
+			for(int y = 0; y < tempBoard.board[z].length; y++){
+				for (int i = 0; i < tempBoard.board.length; i++) {
+					for(int j = 0; j < tempBoard.board[i].length; j++){
+						if(tempBoard.board[z][y].getP() != null){
+
+							if(tempBoard.board[z][y].getP().move(tempBoard.board[z][y].getP(), tempBoard.board[i][j], tempBoard) && tempBoard.board[z][y].getP().getTeam().equals("l")){
+								tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
+								tempBoard.board[z][y].setP(null);
+								//should do every possible LEGAL move for every light piece on the board.
+
+								tempBoard.scanBoardforCheckMate();
+								//^ This will go through every possible map, now you need to check right after this with an if( any move made check false) then set checkmateLight to false;
+								//else set checkmateLight = true
+							}
+
+						}
+					}
+				}
+
+			}
+		}
+		if(moveManager.isLightKingCheckMate()){
+			return true;
+		}
+		return false;
+	}
+	public boolean checkCheckMateDark(Board b) throws Exception {
+
+		Board tempBoard = b.copy(b.board);
+		for (int z = 0; z < tempBoard.board.length; z++) {
+			for(int y = 0; y < tempBoard.board[z].length; y++){
+				for (int i = 0; i < tempBoard.board.length; i++) {
+					for(int j = 0; j < tempBoard.board[i].length; j++){
+						if(tempBoard.board[z][y].getP() != null){
+
+							if(tempBoard.board[z][y].getP().move(tempBoard.board[z][y].getP(), tempBoard.board[i][j], tempBoard) && tempBoard.board[z][y].getP().getTeam().equals("d")){
+								tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
+								tempBoard.board[z][y].setP(null);
+								//should do every possible LEGAL move for every light piece on the board.
+
+								tempBoard.scanBoardforCheckMate();
+							}
+
+
+						}
+						
+					}
+				}
+
+			}
+		}
+		if(moveManager.isDarkKingCheckMate()){
+			return true;
+		}
+		return false;
+	}
+	public void scanBoardforCheckMate(){
+		for (int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++){
+				if(board[i][j].getP()!=null){ 
+					board[i][j].getP().setLetterloc(i);
+					board[i][j].getP().setNumloc(j);
+					if(board[i][j].getP().getTeam() == "l" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
+					
+
+
+						this.lKingx = i;
+						this.lKingy = j;
+
+
+					}
+					else if(board[i][j].getP().getTeam() == "d" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
+						this.dKingx = i;
+						this.dKingy = j;
+					}
+
+				}
+			}
+		}
+		for (int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++){
+				if(isLightCheckMate(board[i][j])){
+
+					moveManager.setLightKingCheckMate(true);
+
+				}
+
+				if(isDarkCheckMate(board[i][j])){
+					mManager.setDarkKingCheckMate(true);
+				}
+			}
+		}
+		for (int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++){
+				if(isLightChecked(board[i][j])){
+
+
+					
+
+				}
+				else if(!isLightChecked(board[i][j])){
+					
+				}
+
+				if(isDarkChecked(board[i][j])){
+
+					
+				}
+				if(!isDarkChecked(board[i][j])){
+					
+
+				}
+			}
+		}
+	}
+
+	private boolean isDarkCheckMate(Tile tile) {
+
+		return false;
+	}
+	private boolean isLightCheckMate(Tile t) {
+
+		if(t.getP() != null){  //get every tile with a piece on the board
+			for (int i = 0; i < board.length; i++) {
+				for(int j = 0; j < board[i].length; j++){
+					if(t.getP().move(t.getP(), this.board[i][j], this) && t.getP().getTeam().equals("l")){ //try to move every single light piece to every possible location
+						if(isLightChecked(board[i][j])){ //Checks if any move you're doing that is legal for that piece, will leave you still in check
+
+						}
+
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public Board copy(Tile[][] b){
@@ -195,10 +352,10 @@ public class Board {
 	}
 	public boolean isLightChecked(Tile t){
 		if(t.getP() != null){
-//			System.out.println("Checking if light king is in check from "+ t.getP()+ " at x: " +(t.getXcoord()) + " and y: "+ t.getYcoord() );
-//			System.out.println(lKingx +" "+lKingy);
+			//			System.out.println("Checking if light king is in check from "+ t.getP()+ " at x: " +(t.getXcoord()) + " and y: "+ t.getYcoord() );
+			//			System.out.println(lKingx +" "+lKingy);
 			if(t.getP().move(t.getP(), this.board[this.lKingx][this.lKingy], this) && t.getP().getTeam().equals("d")){  // <----- MAJOR ISSUE. The bishop logic is messed I believe
-				
+
 				return true;
 			}
 		}
