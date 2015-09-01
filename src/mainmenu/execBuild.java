@@ -19,7 +19,7 @@ public class execBuild {
 		moveManager mmanager = new moveManager();
 		ArrayList<String> commands = new ArrayList<String>();
 		Board board = new Board();
-		boolean ifverbose = false;
+		boolean ifverbose = true;
 		String fileName = "fail";
 		board.printBoard();
 
@@ -30,10 +30,10 @@ public class execBuild {
 		if ((args.length != 0))
 		{
 			if(!args[0].isEmpty()){
-				if(args[0].equals("v")){
-					ifverbose = true;
-				}
-				else if(args[0].matches(".*[.]txt")){
+				//				if(args[0].equals("v")){
+				//					ifverbose = true;
+				//				}
+				if(args[0].matches(".*[.]txt")){
 					fileName = args[0];
 				}
 				else{
@@ -52,7 +52,7 @@ public class execBuild {
 						while ((line = br.readLine()) != null) {
 							if(line.length() == 4 || line.length() == 5){
 								try{
-									System.out.println("ABOUT TO SCAN REAL BOARD");
+									//									System.out.println("ABOUT TO SCAN REAL BOARD");
 									board.scanBoard();
 
 
@@ -65,25 +65,25 @@ public class execBuild {
 									if(ifverbose){
 
 										board.printBoard();
-										
+
 
 
 										board.scanBoardforCheckMate();		
-										System.out.println(moveManager.isLightKingCheckMate() + "<-- Light King Check Mate");
+										//System.out.println(moveManager.isLightKingCheckMate() + "<-- Light King Check Mate");
 										if(moveManager.getLightKingChecked()){
 											System.out.println("Uh oh, Light is in check!");
 										}
 										else if(moveManager.getDarkKingChecked()){
 											System.out.println("Uh oh, Dark is in check!");
 										}
-										
+
 										if(board.checkCheckMateLight(board)){
 											throw new Exception("Light loses! Checkmate");
 										}
 
 
 
-																
+
 										if(board.checkCheckMateDark(board)){
 											throw new Exception("Dark loses! Checkmate");
 										}
@@ -176,8 +176,93 @@ public class execBuild {
 
 			}
 		}
+		else{
+			
+			boolean active = true;
+		
+			while(active){
+				try{
+					
+					board.scanBoard();
+					Scanner in = new Scanner(System.in);
+					System.out.println("Hello, enter a command");
+					String userin = in.nextLine();
 
+					
+
+
+
+
+					
+					
+					if(userin.length() == 4 || userin.length() == 5){
+						
+						mmanager.moveReader(userin, board);
+						board.printBoard();
+						
+						board.scanBoardforCheckMate();		
+						//System.out.println(moveManager.isLightKingCheckMate() + "<-- Light King Check Mate");
+						if(moveManager.getLightKingChecked()){
+							System.out.println("Uh oh, Light is in check!");
+						}
+						else if(moveManager.getDarkKingChecked()){
+							System.out.println("Uh oh, Dark is in check!");
+						}
+
+						if(board.checkCheckMateLight(board)){
+							
+							System.out.println("Light loses! Checkmate");
+							break;
+
+						}
+						if(board.checkCheckMateDark(board)){
+							
+							System.out.println("Dark loses! Checkmate");
+							break;
+							
+						}
+
+					}
+					else if(userin.length() == 8){	
+
+						commands.add(userin);
+
+					}
+
+					else if(userin.isEmpty()){
+
+						active = false;
+					}
+					else {
+						mmanager.moveReader(userin, board);
+						board.printBoard();
+					}
+
+				}
+				catch(Exception e){
+					System.out.println(e.getMessage());
+					
+				}
+			}
+			for(int i = 0; i < commands.size(); i++){
+				try{
+
+					board.scanBoard();
+
+
+					mmanager.moveReader(commands.get(i),board);
+
+					board.printBoard();
+				}
+				catch (Exception e){
+					System.out.println(e.getMessage());
+					
+					continue;
+				}
+
+			}
+		}
 
 	}
-
+	
 }

@@ -134,13 +134,13 @@ public class Board {
 			for(int j = 0; j < board[i].length; j++){
 				if(isLightChecked(board[i][j])){
 
-					System.out.println("Uh oh, Light is in check!");
+					//System.out.println("Uh oh, Light is in check!");
 					moveManager.setLightKingChecked(true);
 
 				}
 
 				if(isDarkChecked(board[i][j])){
-					System.out.println("Uh oh, Dark is in check!");
+					//System.out.println("Uh oh, Dark is in check!");
 					moveManager.setDarkKingChecked(true);
 				}
 			}
@@ -177,14 +177,18 @@ public class Board {
 									//So the current problem, tempBoard light king is in check but it still enters the method below
 
 									if(!moveManager.getLightKingChecked()){
-										tempBoard.printBoard();
+										//tempBoard.printBoard();
 
 //										System.out.println(tempBoard.board[i][j].getP().getLetterloc()+"X");
 //										System.out.println(tempBoard.board[i][j].getP().getNumloc() + "Y");
-
-										System.out.println("Hello");
-										System.out.println(moveManager.getLightKingChecked());
+//
+//										System.out.println("Hello");
+//										System.out.println(moveManager.getLightKingChecked());
+										moveManager.setLightKingCheckMate(false);
+										
 									}
+									else 
+										moveManager.setLightKingCheckMate(true);
 
 								}
 								//^ This will go through every possible map, now you need to check right after this with an if( any move made check false) then set checkmateLight to false;

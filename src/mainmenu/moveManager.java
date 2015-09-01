@@ -379,7 +379,7 @@ public class moveManager {
 
 
 							tempBoard.scanBoard();//This should set LightKingChecked
-							System.out.println("LightKingChecked: "+LightKingChecked);
+//							System.out.println("LightKingChecked: "+LightKingChecked);
 							if(LightKingChecked){
 
 								throw new Exception("Light is still in check! Light Please try another move!");
@@ -458,7 +458,7 @@ public class moveManager {
 					Board tempBoard = b.copy(b.board);
 
 
-					System.out.println("SCANNED TEMP BOARD and The Light King is in Check: " + LightKingChecked);
+					//System.out.println("SCANNED TEMP BOARD and The Light King is in Check: " + LightKingChecked);
 
 					Tile tileOriginCheck = tempBoard.board[(int)singmove.group(1).toLowerCase().charAt(0)-97][(int)singmove.group(2).charAt(0)-49];
 					Tile tileDestinationCheck = tempBoard.board[(int)singmove.group(3).toLowerCase().charAt(0)-97][(int)singmove.group(4).charAt(0)-49];
@@ -475,6 +475,9 @@ public class moveManager {
 						//						tempBoard.printBoard();
 						//						System.out.println("======COPY=====");
 
+						
+						
+	
 
 
 						//						System.out.println("======REAL=====");
@@ -483,7 +486,7 @@ public class moveManager {
 
 
 						tempBoard.scanBoard();//This should set LightKingChecked
-						System.out.println("LightKingChecked: "+LightKingChecked);
+						//System.out.println("LightKingChecked: "+LightKingChecked);
 						if(LightKingChecked){
 
 							throw new Exception("Light is still in check! Light Please try another move!");
@@ -511,7 +514,7 @@ public class moveManager {
 					}
 
 
-					System.out.println("Move the "+tileDestination.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4) + " LightCheck: "+this.LightKingChecked);
+					System.out.println("Move the "+tileDestination.getP().getFullteam()+" "+tileDestination.getP().getFullPiece()+"at " + singmove.group(1) + singmove.group(2) +" to "+ singmove.group(3) + singmove.group(4));
 					//					tileDestination.setP(tileOrigin.getP());
 					//					tileOrigin.setP(null);
 				}

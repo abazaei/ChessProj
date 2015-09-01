@@ -94,7 +94,7 @@ public abstract class Piece {
 	private boolean kingMove(Piece p, Tile destination, Board b) {
 
 		if(queenMove(p,destination,b) && (Math.abs(p.getLetterloc()-destination.getXcoord()) == 1 || Math.abs(p.getNumloc()-destination.getYcoord())==1)){
-			System.out.println(p.getFullPiece()+ p.getFullteam()+ " Moving from X:"+p.getLetterloc()+" Y: "+p.getNumloc()+" to X: "+destination.getXcoord() +" Y: "+ destination.getYcoord());
+			//System.out.println(p.getFullPiece()+ p.getFullteam()+ " Moving from X:"+p.getLetterloc()+" Y: "+p.getNumloc()+" to X: "+destination.getXcoord() +" Y: "+ destination.getYcoord());
 			return true;
 		}
 		return false;
