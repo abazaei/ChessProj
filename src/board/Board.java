@@ -103,8 +103,8 @@ public class Board {
 
 		//	THIS SHOULD PRODUCE CHECK MATE. FIGURE OUT WHERE TO PUT THIS!!!
 
-		mManager.setDarkKingChecked(false);
-		mManager.setLightKingChecked(false);
+		moveManager.setDarkKingChecked(false);
+		moveManager.setLightKingChecked(false);
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
 				if(board[i][j].getP()!=null){ // THE ULTIMATE BUG HAS BEEN FOUND, FIND WHERE KING IS. THEN RUN LOOP AGAIN
@@ -132,48 +132,61 @@ public class Board {
 		}
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
-				if(isLightCheckMate(board[i][j])){
-
-
-
-				}
-
-				if(isDarkCheckMate(board[i][j])){
-
-				}
-			}
-		}
-		for (int i = 0; i < board.length; i++) {
-			for(int j = 0; j < board[i].length; j++){
 				if(isLightChecked(board[i][j])){
 
 					System.out.println("Uh oh, Light is in check!");
-					mManager.setLightKingChecked(true);
+					moveManager.setLightKingChecked(true);
 
 				}
 
 				if(isDarkChecked(board[i][j])){
 					System.out.println("Uh oh, Dark is in check!");
-					mManager.setDarkKingChecked(true);
+					moveManager.setDarkKingChecked(true);
 				}
 			}
 		}
 	}
+
+	/**
+	 * 1. Loop through rows/columns of pieces
+	 * 2. With each piece, loop through and attempt to move the piece to every tile, if it's valid, actually move it on the copied board
+	 * 3. Check the current copied version of the board, to see if any dark pieces can now succesfully move to the light king.
+	 * 4. If a move takes the king out of check, he is not in check mate.
+	 * @param b
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean checkCheckMateLight(Board b) throws Exception {
 
-		Board tempBoard = b.copy(b.board);
-		for (int z = 0; z < tempBoard.board.length; z++) {
-			for(int y = 0; y < tempBoard.board[z].length; y++){
-				for (int i = 0; i < tempBoard.board.length; i++) {
-					for(int j = 0; j < tempBoard.board[i].length; j++){
+		//I THINK THE BOARD SHOULD BE COPIED EACH TIME
+		for (int z = 0; z < b.board.length; z++) {
+			for(int y = 0; y < b.board[z].length; y++){
+				for (int i = 0; i < b.board.length; i++) {
+					for(int j = 0; j < b.board[i].length; j++){
+
+						Board tempBoard = b.copy(b.board);
 						if(tempBoard.board[z][y].getP() != null){
 
 							if(tempBoard.board[z][y].getP().move(tempBoard.board[z][y].getP(), tempBoard.board[i][j], tempBoard) && tempBoard.board[z][y].getP().getTeam().equals("l")){
-								tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
-								tempBoard.board[z][y].setP(null);
-								//should do every possible LEGAL move for every light piece on the board.
 
-								tempBoard.scanBoardforCheckMate();
+								if(tempBoard.board[i][j].getP() == null || !tempBoard.board[i][j].getP().getTeam().equals("l")){
+									tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
+									tempBoard.board[z][y].setP(null);
+
+									tempBoard.scanBoard();
+									//So the current problem, tempBoard light king is in check but it still enters the method below
+
+									if(!moveManager.getLightKingChecked()){
+										tempBoard.printBoard();
+
+//										System.out.println(tempBoard.board[i][j].getP().getLetterloc()+"X");
+//										System.out.println(tempBoard.board[i][j].getP().getNumloc() + "Y");
+
+										System.out.println("Hello");
+										System.out.println(moveManager.getLightKingChecked());
+									}
+
+								}
 								//^ This will go through every possible map, now you need to check right after this with an if( any move made check false) then set checkmateLight to false;
 								//else set checkmateLight = true
 							}
@@ -202,13 +215,15 @@ public class Board {
 								tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
 								tempBoard.board[z][y].setP(null);
 								//should do every possible LEGAL move for every light piece on the board.
-
+								//System.out.println("Checking if Dark is in Check Mate");
 								tempBoard.scanBoardforCheckMate();
+
+
 							}
 
 
 						}
-						
+
 					}
 				}
 
@@ -220,13 +235,14 @@ public class Board {
 		return false;
 	}
 	public void scanBoardforCheckMate(){
+
 		for (int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++){
 				if(board[i][j].getP()!=null){ 
 					board[i][j].getP().setLetterloc(i);
 					board[i][j].getP().setNumloc(j);
 					if(board[i][j].getP().getTeam() == "l" && board[i][j].getP().getPiece().equalsIgnoreCase("k")){
-					
+
 
 
 						this.lKingx = i;
@@ -242,41 +258,44 @@ public class Board {
 				}
 			}
 		}
+		boolean lightIsCheckMate = true;
 		for (int i = 0; i < board.length; i++) {
+
 			for(int j = 0; j < board[i].length; j++){
-				if(isLightCheckMate(board[i][j])){
 
-					moveManager.setLightKingCheckMate(true);
+				if(!isLightChecked(board[i][j])){
+
+
+					lightIsCheckMate = false;
+
 
 				}
+				//				else{  
+				//					//Current Problem is that K is in checkmate, except it is not Checked...
+				//					// through my current ^ method, if a rook can't reach light King, then it thinks that light is not in check
+				//					
+				//					
+				//				
+				//				}
 
-				if(isDarkCheckMate(board[i][j])){
-					mManager.setDarkKingCheckMate(true);
-				}
-			}
-		}
-		for (int i = 0; i < board.length; i++) {
-			for(int j = 0; j < board[i].length; j++){
-				if(isLightChecked(board[i][j])){
-
-
-					
-
-				}
-				else if(!isLightChecked(board[i][j])){
-					
-				}
-
-				if(isDarkChecked(board[i][j])){
-
-					
-				}
 				if(!isDarkChecked(board[i][j])){
-					
+					//
 
 				}
+				//				else{
+				//					moveManager.setDarkKingCheckMate(false);
+				//					return;
+				//
+				//				}
+
+
 			}
 		}
+
+		moveManager.setLightKingCheckMate(lightIsCheckMate);
+
+
+
 	}
 
 	private boolean isDarkCheckMate(Tile tile) {

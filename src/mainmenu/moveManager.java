@@ -643,19 +643,19 @@ public class moveManager {
 	}
 
 
-	public boolean getDarkKingChecked() {
+	public static boolean getDarkKingChecked() {
 		return DarkKingChecked;
 	}
 
-	public void setDarkKingChecked(boolean darkKingChecked) {
+	public static void setDarkKingChecked(boolean darkKingChecked) {
 		DarkKingChecked = darkKingChecked;
 	}
 
-	public boolean getLightKingChecked() {
+	public static boolean getLightKingChecked() {
 		return LightKingChecked;
 	}
 
-	public void setLightKingChecked(boolean lightKingChecked) {
+	public static void setLightKingChecked(boolean lightKingChecked) {
 		LightKingChecked = lightKingChecked;
 	}
 }

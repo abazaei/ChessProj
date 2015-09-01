@@ -65,20 +65,29 @@ public class execBuild {
 									if(ifverbose){
 
 										board.printBoard();
-										if(mmanager.getLightKingChecked()){
+										
 
-											board.scanBoardforCheckMate();						
-											if(board.checkCheckMateLight(board)){
-												throw new Exception("Light loses! Checkmate");
-											}
-										}
-										else if(mmanager.getDarkKingChecked()){
 
-											board.scanBoardforCheckMate();						
-											if(board.checkCheckMateDark(board)){
-												throw new Exception("Dark loses! Checkmate");
-											}
+										board.scanBoardforCheckMate();		
+										System.out.println(moveManager.isLightKingCheckMate() + "<-- Light King Check Mate");
+										if(moveManager.getLightKingChecked()){
+											System.out.println("Uh oh, Light is in check!");
 										}
+										else if(moveManager.getDarkKingChecked()){
+											System.out.println("Uh oh, Dark is in check!");
+										}
+										
+										if(board.checkCheckMateLight(board)){
+											throw new Exception("Light loses! Checkmate");
+										}
+
+
+
+																
+										if(board.checkCheckMateDark(board)){
+											throw new Exception("Dark loses! Checkmate");
+										}
+
 									}
 								}
 								catch (Exception e){
