@@ -73,7 +73,7 @@ public class execBuild {
 										if(moveManager.getLightKingChecked()){
 											System.out.println("Uh oh, Light is in check!");
 										}
-										else if(moveManager.getDarkKingChecked()){
+										if(moveManager.getDarkKingChecked()){
 											System.out.println("Uh oh, Dark is in check!");
 										}
 

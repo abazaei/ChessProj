@@ -179,13 +179,13 @@ public class Board {
 									if(!moveManager.getLightKingChecked()){
 										//tempBoard.printBoard();
 
-//										System.out.println(tempBoard.board[i][j].getP().getLetterloc()+"X");
-//										System.out.println(tempBoard.board[i][j].getP().getNumloc() + "Y");
-//
-//										System.out.println("Hello");
-//										System.out.println(moveManager.getLightKingChecked());
+										//										System.out.println(tempBoard.board[i][j].getP().getLetterloc()+"X");
+										//										System.out.println(tempBoard.board[i][j].getP().getNumloc() + "Y");
+										//
+										//										System.out.println("Hello");
+										//										System.out.println(moveManager.getLightKingChecked());
 										moveManager.setLightKingCheckMate(false);
-										
+
 									}
 									else 
 										moveManager.setLightKingCheckMate(true);
@@ -208,24 +208,38 @@ public class Board {
 	}
 	public boolean checkCheckMateDark(Board b) throws Exception {
 
-		Board tempBoard = b.copy(b.board);
-		for (int z = 0; z < tempBoard.board.length; z++) {
-			for(int y = 0; y < tempBoard.board[z].length; y++){
-				for (int i = 0; i < tempBoard.board.length; i++) {
-					for(int j = 0; j < tempBoard.board[i].length; j++){
+		
+		for (int z = 0; z < b.board.length; z++) {
+			for(int y = 0; y < b.board[z].length; y++){
+				for (int i = 0; i < b.board.length; i++) {
+					for(int j = 0; j < b.board[i].length; j++){
+						Board tempBoard = b.copy(b.board);
 						if(tempBoard.board[z][y].getP() != null){
 
 							if(tempBoard.board[z][y].getP().move(tempBoard.board[z][y].getP(), tempBoard.board[i][j], tempBoard) && tempBoard.board[z][y].getP().getTeam().equals("d")){
-								tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
-								tempBoard.board[z][y].setP(null);
-								//should do every possible LEGAL move for every light piece on the board.
-								//System.out.println("Checking if Dark is in Check Mate");
-								tempBoard.scanBoardforCheckMate();
+								if(tempBoard.board[i][j].getP() == null || !tempBoard.board[i][j].getP().getTeam().equals("d")){
+									tempBoard.board[i][j].setP(tempBoard.board[z][y].getP());
+									tempBoard.board[z][y].setP(null);
 
+									tempBoard.scanBoard();
+									//So the current problem, tempBoard light king is in check but it still enters the method below
 
+									if(!moveManager.getDarkKingChecked()){
+										//tempBoard.printBoard();
+
+										//										System.out.println(tempBoard.board[i][j].getP().getLetterloc()+"X");
+										//										System.out.println(tempBoard.board[i][j].getP().getNumloc() + "Y");
+										//
+										//										System.out.println("Hello");
+										//										System.out.println(moveManager.getLightKingChecked());
+										moveManager.setDarkKingCheckMate(false);
+
+									}
+									else 
+										moveManager.setDarkKingCheckMate(true);
+
+								}
 							}
-
-
 						}
 
 					}
